@@ -63,7 +63,31 @@ body.dark-mode {
             text-transform: uppercase;
             box-shadow: 4px 4px 0px var(--border);
             transition: transform 0.1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
+        
+        .theme-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .theme-option.hidden {
+            display: none !important;
+        }
+        
+        .theme-icon {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            vertical-align: middle;
+            stroke: white;
+            fill: none;
+        }
+        
         .dark-mode-toggle:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0px var(--border); }
 
         .principle-box {
@@ -219,11 +243,30 @@ body.dark-mode {
         <h1>Project Toolsuite</h1>
         <button id="installBtn" class="dark-mode-toggle" style="right: 180px; display: none;">INSTALL APP</button>
         <button
-    class="dark-mode-toggle"
-    onclick="toggleTheme()"
-    id="themeBtn">
-    DARK MODE
-</button>
+        class="dark-mode-toggle"
+        onclick="toggleTheme()"
+        id="themeBtn">
+            <span class="theme-option dark-mode-option hidden">
+                <svg class="theme-icon-dark sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5"></circle>
+                    <line x1="12" y1="1" x2="12" y2="3"></line>
+                    <line x1="12" y1="21" x2="12" y2="23"></line>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                    <line x1="1" y1="12" x2="3" y2="12"></line>
+                    <line x1="21" y1="12" x2="23" y2="12"></line>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                </svg>
+                LIGHT MODE
+            </span>
+            <span class="theme-option light-mode-option">
+                <svg class="theme-icon moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+                DARK MODE
+            </span>
+        </button>
     </header>
 
     <section class="principle-box">
@@ -409,10 +452,19 @@ function updateThemeButton() {
 
     if (!btn) return;
 
-    btn.textContent =
-        document.body.classList.contains('dark-mode')
-            ? 'LIGHT MODE'
-            : 'DARK MODE';
+    const isDark = document.body.classList.contains('dark-mode');
+    const darkModeOption = btn.querySelector('.dark-mode-option');
+    const lightModeOption = btn.querySelector('.light-mode-option');
+    
+    if (isDark) {
+        // Dark mode is active, show LIGHT option (sun + LIGHT text)
+        if (darkModeOption) darkModeOption.classList.remove('hidden');
+        if (lightModeOption) lightModeOption.classList.add('hidden');
+    } else {
+        // Light mode is active, show DARK option (moon + DARK text)
+        if (darkModeOption) darkModeOption.classList.add('hidden');
+        if (lightModeOption) lightModeOption.classList.remove('hidden');
+    }
 }
 
 function applyTheme(theme) {
