@@ -18,8 +18,9 @@
     <link rel="stylesheet" href="../../assets/css/notifications.css">
     <script src="../../assets/js/notifications.js" defer></script>
     <style>
-        body { font-family: 'Courier New', monospace; background: #fff; color: #000; max-width: 1200px; margin: 40px auto; padding: 20px; }
-        header { border-bottom: 5px solid #000; margin-bottom: 30px; }
+
+        body { font-family: 'Courier New', monospace; background: var(--bg); color: var(--text); max-width: 1200px; margin: 40px auto; padding: 20px; }
+        header { border-bottom: 5px solid var(--border); margin-bottom: 30px; }
         h1 { font-size: 2rem; text-transform: uppercase; margin: 0; }
 
         .board {
@@ -30,8 +31,8 @@
         }
 
         .column {
-            border: 3px solid #000;
-            background: #f9f9f9;
+            border: 3px solid var(--border);
+            background: var(--tag-bg);
             min-height: 500px;
             display: flex;
             flex-direction: column;
@@ -53,13 +54,13 @@
         }
 
         .task-card {
-            background: #fff;
-            border: 2px solid #000;
+            background: var(--bg);
+            border: 2px solid var(--border);
             padding: 12px;
             margin-bottom: 12px;
             cursor: grab;
             position: relative;
-            box-shadow: 4px 4px 0px #000;
+            box-shadow: 4px 4px 0px var(--border);
         }
 
         .task-card:active { cursor: grabbing; }
@@ -72,7 +73,7 @@
             margin-bottom: 8px;
             text-transform: uppercase;
             font-weight: bold;
-            border: 1px solid #000;
+            border: 1px solid var(--border);
         }
         .label-bug { background: #ff4d4d; color: white; }
         .label-feature { background: #3b82f6; color: white; }
@@ -91,17 +92,17 @@
         }
 
         .add-controls {
-            border-top: 2px solid #000;
+            border-top: 2px solid var(--border);
             padding: 15px;
             display: flex;
             flex-direction: column;
             gap: 8px;
-            background: #fff;
+            background: var(--bg);
         }
 
         select, button.add-btn {
             font-family: inherit;
-            border: 2px solid #000;
+            border: 2px solid var(--border);
             padding: 8px;
             font-weight: bold;
             text-transform: uppercase;
@@ -116,15 +117,19 @@
 
         button.add-btn:hover { background: #333; }
 
-        .ghost-card { opacity: 0.2; border: 2px dashed #000; }
+        .ghost-card { opacity: 0.2; border: 2px dashed var(--border); }
+    
     </style>
+    <link rel="stylesheet" href="../../theme.css">
+    <script src="../../theme.js"></script>
 </head>
 <body>
 
 <header>
     <h1>Offline Kanban</h1>
     <p>Categorize and manage tasks locally. Persistence enabled.</p>
-</header>
+
+        <button class="dark-mode-toggle" onclick="toggleTheme()" id="themeBtn">DARK MODE</button></header>
 
 <div class="board">
     <div class="column">
