@@ -280,9 +280,10 @@ class VectorEngine {
         const h = this.canvas.height;
 
         // Clear & Grid
-        ctx.fillStyle = '#111';
+        const isDark = document.documentElement.classList.contains('dark-mode');
+        ctx.fillStyle = isDark ? '#0f172a' : '#e7e5e4';
         ctx.fillRect(0, 0, w, h);
-        this.drawGrid(w, h);
+        this.drawGrid(w, h, isDark);
 
         // Draw Shapes
         this.shapes.forEach(s => this.drawShape(ctx, s));
@@ -294,9 +295,9 @@ class VectorEngine {
         requestAnimationFrame(() => this.loop());
     }
 
-    drawGrid(w, h) {
+    drawGrid(w, h, isDark) {
         const gridSize = parseInt(document.getElementById('gridSize').value) || 20;
-        this.ctx.strokeStyle = '#222';
+        this.ctx.strokeStyle = isDark ? '#1e293b' : '#d6d3d1';
         this.ctx.lineWidth = 1;
         this.ctx.beginPath();
         for (let x = 0; x < w; x += gridSize) { this.ctx.moveTo(x, 0); this.ctx.lineTo(x, h); }
@@ -511,7 +512,9 @@ class VectorEngine {
             link.href = this.canvas.toDataURL();
             link.click();
         } else if (format === 'svg') {
-            let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${this.canvas.width}" height="${this.canvas.height}" style="background:#111">`;
+            const isDark = document.documentElement.classList.contains('dark-mode');
+            const bg = isDark ? '#0f172a' : '#e7e5e4';
+            let svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${this.canvas.width}" height="${this.canvas.height}" style="background:${bg}">`;
 
             this.shapes.forEach(s => {
                 const common = `fill="${s.fill}" stroke="${s.stroke}" stroke-width="${s.width}"`;
