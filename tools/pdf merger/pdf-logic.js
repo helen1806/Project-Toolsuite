@@ -12,7 +12,50 @@ const splitInput = document.getElementById('splitInput');
 const previewContainer = document.getElementById('pdfPreviewContainer');
 const splitRangeInput = document.getElementById('splitRange');
 
+const mergeInput = document.getElementById('mergeInput');
+const mergeFileList = document.getElementById('mergeFileList');
+const imgToPdfInput = document.getElementById('imgToPdfInput');
+const imgFileList = document.getElementById('imgFileList');
+
 let selectedPages = new Set();
+let mergeFiles = [];
+let imgFiles = [];
+
+function renderFileList(filesArray, containerElement) {
+    containerElement.innerHTML = '';
+    filesArray.forEach((file, index) => {
+        const item = document.createElement('div');
+        item.className = 'file-item';
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = file.name;
+        
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'remove-btn';
+        removeBtn.textContent = 'X';
+        removeBtn.onclick = () => {
+            filesArray.splice(index, 1);
+            renderFileList(filesArray, containerElement);
+        };
+        
+        item.appendChild(nameSpan);
+        item.appendChild(removeBtn);
+        containerElement.appendChild(item);
+    });
+}
+
+mergeInput.addEventListener('change', (e) => {
+    mergeFiles.push(...Array.from(e.target.files));
+    renderFileList(mergeFiles, mergeFileList);
+    e.target.value = "";
+});
+
+imgToPdfInput.addEventListener('change', (e) => {
+    imgFiles.push(...Array.from(e.target.files));
+    renderFileList(imgFiles, imgFileList);
+    e.target.value = "";
+});
+
 
 // --- Helper: Download function ---
 function downloadFile(bytes, name) {
@@ -28,7 +71,7 @@ function downloadFile(bytes, name) {
 
 // --- 1. MERGE LOGIC ---
 document.getElementById('mergeBtn').onclick = async () => {
-    const files = document.getElementById('mergeInput').files;
+    const files = mergeFiles;
     if (files.length < 2) return notify.info("Select at least 2 PDFs");
     
     status.textContent = "Merging...";
@@ -114,27 +157,76 @@ splitInput.onchange = async (e) => {
     }
 };
 
+splitRangeInput.addEventListener('input', (e) => {
+    const range = e.target.value;
+    selectedPages.clear();
+    
+    const parts = range.split(',');
+    parts.forEach(part => {
+        part = part.trim();
+        if (part.includes('-')) {
+            const [start, end] = part.split('-').map(Number);
+            if (!isNaN(start) && !isNaN(end) && start <= end && start >= 1) {
+                for (let i = start; i <= end; i++) selectedPages.add(i);
+            }
+        } else if (part !== "") {
+            const num = Number(part);
+            if (!isNaN(num) && num >= 1) {
+                selectedPages.add(num);
+            }
+        }
+    });
+
+    // Update canvas borders
+    const wrappers = previewContainer.children;
+    for (let i = 0; i < wrappers.length; i++) {
+        const pageNum = i + 1;
+        const canvas = wrappers[i].querySelector('canvas');
+        if (canvas) {
+            if (selectedPages.has(pageNum)) {
+                canvas.style.border = "3px solid blue";
+            } else {
+                canvas.style.border = "3px solid transparent";
+            }
+        }
+    }
+});
+
 document.getElementById('splitBtn').onclick = async () => {
     const file = splitInput.files[0];
     const range = splitRangeInput.value;
     if (!file || !range) return notify.info("Select a file and click pages (or type range)");
+
+    const pageIndices = [];
+    let hasError = false;
+    
+    range.split(',').forEach(part => {
+        part = part.trim();
+        if (part === "") return;
+        if (part.includes('-')) {
+            const [start, end] = part.split('-').map(Number);
+            if (isNaN(start) || isNaN(end) || start > end || start < 1) { 
+                hasError = true; return; 
+            }
+            for (let i = start; i <= end; i++) pageIndices.push(i - 1);
+        } else {
+            const num = Number(part);
+            if (isNaN(num) || num < 1) { 
+                hasError = true; return; 
+            }
+            pageIndices.push(num - 1);
+        }
+    });
+
+    if (hasError || pageIndices.length === 0) {
+        return notify.error("Invalid page range format. Please use formats like 1, 3, 5-8.");
+    }
 
     status.textContent = "Splitting...";
     try {
         const doc = await PDFLib.PDFDocument.load(await file.arrayBuffer());
         const newDoc = await PDFLib.PDFDocument.create();
         
-        const pageIndices = [];
-        range.split(',').forEach(part => {
-            part = part.trim();
-            if (part.includes('-')) {
-                const [start, end] = part.split('-').map(Number);
-                for (let i = start; i <= end; i++) pageIndices.push(i - 1);
-            } else if (part !== "" && !isNaN(part)) {
-                pageIndices.push(Number(part) - 1);
-            }
-        });
-
         const pages = await newDoc.copyPages(doc, pageIndices);
         pages.forEach(p => newDoc.addPage(p));
         const bytes = await newDoc.save();
@@ -146,7 +238,7 @@ document.getElementById('splitBtn').onclick = async () => {
 
 // --- 3. IMAGE TO PDF LOGIC ---
 document.getElementById('imgToPdfBtn').onclick = async () => {
-    const files = document.getElementById('imgToPdfInput').files;
+    const files = imgFiles;
     if (files.length === 0) return notify.info("Select at least one image");
 
     status.textContent = "Converting Images...";

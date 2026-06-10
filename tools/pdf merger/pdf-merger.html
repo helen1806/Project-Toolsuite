@@ -144,6 +144,33 @@
             margin-top: 60px;
             font-size: 0.9rem;
         }
+
+        .file-list {
+            margin-bottom: 15px;
+        }
+        .file-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg);
+            padding: 5px 10px;
+            border: 1px solid var(--border);
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+        .remove-btn {
+            background: transparent;
+            color: red;
+            border: none;
+            box-shadow: none;
+            cursor: pointer;
+            padding: 0 5px;
+            font-weight: bold;
+        }
+        .remove-btn:hover {
+            background: transparent;
+            color: darkred;
+        }
     </style>
 </head>
 <body>
@@ -159,6 +186,7 @@
             <h2>1. Merge PDFs</h2>
             <p>Combine multiple PDFs into one document.</p>
             <input type="file" id="mergeInput" accept=".pdf" multiple>
+            <div id="mergeFileList" class="file-list"></div>
             <button id="mergeBtn">Merge & Download</button>
         </section>
 
@@ -173,7 +201,7 @@
         <em>Upload a file to see preview...</em>
     </div>
 
-    <p>Selected Pages: <input type="text" id="splitRange" placeholder="e.g. 1, 3, 5"></p>
+    <p>Selected Pages: <input type="text" id="splitRange" placeholder="e.g. 1, 3, 5-8"></p>
     <button id="splitBtn">Extract & Download Selected</button>
 </section>
 
@@ -183,6 +211,7 @@
             <h2>3. Images to PDF</h2>
             <p>Convert JPG/PNG images into a single PDF document.</p>
             <input type="file" id="imgToPdfInput" accept="image/jpeg, image/png" multiple>
+            <div id="imgFileList" class="file-list"></div>
             <button id="imgToPdfBtn">Convert & Download</button>
         </section>
 
