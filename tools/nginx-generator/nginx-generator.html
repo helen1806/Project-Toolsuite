@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGINX Configuration Generator - Project Toolsuite</title>
+    <meta name="description" content="Generate production-ready NGINX configurations visually. Support for Reverse Proxy, SPA routing, SSL redirects, Gzip, Caching, and Rate Limiting.">
+    <link rel="stylesheet" href="../../theme.css">
+    <link rel="stylesheet" href="nginx-generator.css">
+    
+    <link rel="stylesheet" href="../../assets/css/notifications.css">
+    <script src="../../assets/js/notifications.js" defer></script>
+    <script src="../../theme.js"></script>
+</head>
+<body>
+
+    <header>
+        <div style="display: flex; align-items: center;">
+            <button class="nav-btn" onclick="window.location.href='../../index.html'">[ &lt; ] HOME</button>
+            <h1>NGINX Config Generator</h1>
+        </div>
+        <p>Visually build production-ready server and location configurations in real-time.</p>
+        <button id="themeBtn" class="dark-mode-toggle" onclick="toggleTheme()">DARK MODE</button>
+    </header>
+
+    <main>
+        <div class="generator-split">
+            <!-- Left Panel: Settings Form -->
+            <div class="card">
+                <h2 class="card-title">Configuration Settings</h2>
+                
+                <!-- Template type radio selector -->
+                <div class="form-group">
+                    <label>Configuration Template</label>
+                    <div class="radio-tab-group">
+                        <label class="radio-tab-label checked">
+                            <input type="radio" name="templateType" value="static" checked>
+                            Static Website
+                        </label>
+                        <label class="radio-tab-label">
+                            <input type="radio" name="templateType" value="proxy">
+                            Reverse Proxy
+                        </label>
+                        <label class="radio-tab-label">
+                            <input type="radio" name="templateType" value="spa">
+                            SPA Routing
+                        </label>
+                        <label class="radio-tab-label">
+                            <input type="radio" name="templateType" value="gateway">
+                            API Gateway
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Server Core settings -->
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="domainName">Domain Name</label>
+                        <input type="text" id="domainName" placeholder="e.g. example.com" autocomplete="off" spellcheck="false">
+                    </div>
+                    <div class="form-group" style="max-width: 150px;">
+                        <label for="serverPort">Listen Port</label>
+                        <input type="text" id="serverPort" value="80" autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+
+                <!-- Path root directory (Static, SPA, Gateway only) -->
+                <div class="form-group" id="rootGroup">
+                    <label for="rootPath">Document Root Path</label>
+                    <input type="text" id="rootPath" value="/var/www/html" autocomplete="off" spellcheck="false">
+                </div>
+
+                <!-- Backend Proxy Pass URL (Proxy and Gateway only) -->
+                <div class="form-group" id="proxyGroup" style="display: none;">
+                    <label for="proxyUrl">Backend Proxy URL</label>
+                    <input type="text" id="proxyUrl" value="http://127.0.0.1:3000" autocomplete="off" spellcheck="false">
+                </div>
+
+                <hr style="border: none; border-top: 1px dashed var(--border); margin: 24px 0;">
+
+                <!-- SSL Security Section -->
+                <div class="form-group">
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="sslEnable">
+                        Enable SSL / HTTPS Support
+                    </label>
+                    
+                    <!-- Collapsible SSL certificate settings -->
+                    <div class="sub-settings-panel" id="sslSubPanel">
+                        <label class="checkbox-row" style="margin-bottom: 15px;">
+                            <input type="checkbox" id="sslRedirect" checked>
+                            Enforce HTTP to HTTPS Redirect
+                        </label>
+                        <div class="form-group">
+                            <label for="sslCert">SSL Certificate Path</label>
+                            <input type="text" id="sslCert" value="/etc/letsencrypt/live/example.com/fullchain.pem" autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0;">
+                            <label for="sslKey">SSL Certificate Key Path</label>
+                            <input type="text" id="sslKey" value="/etc/letsencrypt/live/example.com/privkey.pem" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance and Security Features checkboxes -->
+                <div class="form-group">
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="headersEnable" checked>
+                        Add Basic Security Headers
+                    </label>
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="gzipEnable" checked>
+                        Enable Gzip Compression
+                    </label>
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="cacheEnable" checked>
+                        Enable Browser Static Caching
+                    </label>
+                </div>
+
+                <!-- Rate Limiting configs -->
+                <div class="form-group" style="margin-bottom: 0;">
+                    <label class="checkbox-row">
+                        <input type="checkbox" id="rateLimitEnable">
+                        Enable Rate Limiting
+                    </label>
+                    
+                    <!-- Collapsible Rate Limiting options -->
+                    <div class="sub-settings-panel" id="rateLimitSubPanel">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="rateLimitZone">Zone Name</label>
+                                <input type="text" id="rateLimitZone" value="api_limit" autocomplete="off" spellcheck="false">
+                            </div>
+                            <div class="form-group" style="max-width: 120px;">
+                                <label for="rateLimitRate">Rate Limit</label>
+                                <input type="text" id="rateLimitRate" value="10r/s" autocomplete="off" spellcheck="false">
+                            </div>
+                            <div class="form-group" style="max-width: 120px;">
+                                <label for="rateLimitBurst">Burst Max</label>
+                                <input type="number" id="rateLimitBurst" value="20" min="1" max="1000" autocomplete="off" spellcheck="false">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: Live Code View -->
+            <div class="card" style="height: fit-content;">
+                <h2 class="card-title">nginx.conf Preview</h2>
+                
+                <div class="preview-container">
+                    <div class="preview-actions">
+                        <button class="btn" onclick="copyConfig()">Copy Config</button>
+                        <button class="btn" onclick="downloadConfig()">Download</button>
+                    </div>
+                    <textarea id="previewArea" class="preview-area" readonly></textarea>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><a href="../../index.html">← Back to Home</a></p>
+    </footer>
+
+    <script src="nginx-generator.js"></script>
+</body>
+</html>
