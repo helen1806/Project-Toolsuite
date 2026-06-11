@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Request Builder (Postman Lite) - Project Toolsuite</title>
+    <meta name="description" content="Send HTTP requests, test REST API endpoints, inspect headers and JSON payloads directly from your browser.">
+    <link rel="stylesheet" href="../../theme.css">
+    <link rel="stylesheet" href="api-client.css">
+    
+    <link rel="stylesheet" href="../../assets/css/notifications.css">
+    <script src="../../assets/js/notifications.js" defer></script>
+    <script src="../../theme.js"></script>
+</head>
+<body>
+
+    <header>
+        <div style="display: flex; align-items: center;">
+            <button class="nav-btn" onclick="window.location.href='../../index.html'">[ &lt; ] HOME</button>
+            <h1>Postman Lite // HTTP Client</h1>
+        </div>
+        <p>A client-side REST API requester. Test endpoints, custom headers, and inspect formatted responses.</p>
+        <button id="themeBtn" class="dark-mode-toggle" onclick="toggleTheme()">DARK MODE</button>
+    </header>
+
+    <main>
+        <!-- CORS Policy Alert Notice -->
+        <div class="alert-box">
+            <strong>⚠️ Browser CORS Policy Restriction</strong>
+            <p style="margin: 4px 0 0 0; font-size: 0.85rem; opacity: 0.85; line-height: 1.5;">
+                This tool sends HTTP requests directly from your browser. Target APIs must support and allow Cross-Origin Resource Sharing (CORS), otherwise the request will fail with a Network Error. For localhost testing, ensure your server configures origin access headers.
+            </p>
+        </div>
+
+        <!-- Request configuration block -->
+        <div class="card">
+            <h2 class="card-title">Compose Request</h2>
+            
+            <div class="request-row">
+                <select id="methodSelect" class="method-select">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="PATCH">PATCH</option>
+                    <option value="DELETE">DELETE</option>
+                </select>
+                <input type="text" id="urlInput" class="url-input" placeholder="Enter request URL (e.g., https://jsonplaceholder.typicode.com/posts/1)" autocomplete="off" spellcheck="false">
+                <button id="sendBtn" class="btn btn-primary">[ SEND REQUEST ]</button>
+                <button id="clearBtn" class="btn" onclick="clearConsole()">CLEAR</button>
+            </div>
+
+            <!-- Request Parameters Tab group -->
+            <div class="tab-headers">
+                <button class="tab-link active" data-group="reqTabGroup" data-tab="tab-req-headers">Headers</button>
+                <button class="tab-link" data-group="reqTabGroup" data-tab="tab-req-body" id="bodyTabHeader">Body (JSON)</button>
+            </div>
+
+            <!-- Headers Tab Content -->
+            <div class="tab-content reqTabContent active" id="tab-req-headers">
+                <p style="font-size: 0.85rem; color: var(--muted); margin: 0 0 12px 0;">
+                    Define custom request headers below:
+                </p>
+                <div id="headersContainer" style="margin-bottom: 15px;">
+                    <!-- Rows will be injected here by JS -->
+                </div>
+                <button id="addHeaderBtn" class="btn">+ ADD HEADER</button>
+            </div>
+
+            <!-- Body Tab Content -->
+            <div class="tab-content reqTabContent" id="tab-req-body">
+                <p style="font-size: 0.85rem; color: var(--muted); margin: 0 0 12px 0;">
+                    Input request JSON payload:
+                </p>
+                <textarea id="reqBody" class="payload-area" placeholder='{\n  "title": "foo",\n  "body": "bar",\n  "userId": 1\n}' autocomplete="off" spellcheck="false"></textarea>
+            </div>
+        </div>
+
+        <!-- Response Console -->
+        <div class="card">
+            <h2 class="card-title">Response Console</h2>
+            
+            <!-- Response execution stats -->
+            <div class="stats-row">
+                <div class="stat-badge">
+                    Status: <span id="resStatus" class="status-indicator">-</span>
+                </div>
+                <div class="stat-badge">
+                    Time: <span id="resTime" style="color: var(--muted);">0 ms</span>
+                </div>
+                <div class="stat-badge">
+                    Size: <span id="resSize" style="color: var(--muted);">0 B</span>
+                </div>
+            </div>
+
+            <!-- Response Tabs -->
+            <div class="tab-headers">
+                <button class="tab-link active" data-group="resTabGroup" data-tab="tab-res-body">Body</button>
+                <button class="tab-link" data-group="resTabGroup" data-tab="tab-res-headers">Headers</button>
+            </div>
+
+            <!-- Response Body Panel -->
+            <div class="tab-content resTabContent active" id="tab-res-body">
+                <div class="response-container">
+                    <div class="response-actions">
+                        <button class="btn" onclick="copyResponse()">Copy Response</button>
+                    </div>
+                    <textarea id="resBody" class="response-data" readonly>Response content will appear here...</textarea>
+                </div>
+            </div>
+
+            <!-- Response Headers Panel -->
+            <div class="tab-content resTabContent" id="tab-res-headers">
+                <div class="response-container">
+                    <ul id="resHeadersList" class="response-headers-list">
+                        <li>No headers returned</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p><a href="../../index.html">← Back to Home</a></p>
+    </footer>
+
+    <script src="api-client.js"></script>
+</body>
+</html>
