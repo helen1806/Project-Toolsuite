@@ -1015,7 +1015,6 @@
       }
 
       function renderTools() {
-        console.log("renderTools running");
         const normalize = (str) =>
           str.toLowerCase().replace(/\s+/g, "");
         const query = normalize(document.getElementById("toolSearch").value);
@@ -1051,6 +1050,7 @@
           });
         }
 
+
     if (filtered.length === 0) {
      container.innerHTML = `
       <p style="grid-column: 1/-1; opacity: 0.5;">
@@ -1072,6 +1072,18 @@ container.innerHTML = filtered
   )
   .join("");
   }
+
+        if (filtered.length === 0) {
+          container.innerHTML = `<p style="grid-column: 1/-1; opacity: 0.5;">No tools found matching your criteria.</p>`;
+          return;
+        }
+        container.innerHTML = filtered
+          .map(
+            (t) => `
+            <a href="${t.path}" class="tool-link">${t.name}</a>
+        `,
+          )
+          .join("");
 
       document.getElementById("toolSearch").oninput = renderTools;
 
