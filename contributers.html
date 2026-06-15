@@ -103,6 +103,29 @@
             padding: 2px 4px;
             transition: background-color 0.25s, color 0.25s;
         }
+        .return-tools-wrapper {
+            text-align: center;
+
+            background: var(--tag-bg);
+        }
+        .return-tools-btn {
+            display: inline-block;
+            background: var(--text);
+            color: var(--bg);
+            padding: 18px 44px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 2px solid var(--border);
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .return-tools-btn:hover {
+             background: var(--bg);
+            color: var(--text);
+            transform: translateY(-4px);
+        }
 
         footer {
             margin-top: 96px;
@@ -140,6 +163,7 @@
     </header>
 
     <main>
+
         <section>
             <h2>Contributors</h2>
             <p>These people help shape and improve Project Toolsuite.</p>
@@ -297,6 +321,11 @@
                 Start with the <a href="CONTRIBUTING.md">contribution guide</a>.
             </p>
         </section>
+        <div class="return-tools-wrapper">
+            <a href="index.html" class="return-tools-btn">
+                ← Return to Tools
+            </a>
+        </div>
     </main>
 
     <footer>
