@@ -1127,30 +1127,32 @@
 
       let activeTag = "all";
 
-      function renderTags() {
-        const tagBox = document.getElementById("tag-container");
-        const uniqueTags = [
-          "all",
-          ...new Set(tools.flatMap((t) => t.tags)),
-        ].sort((a, b) => {
-          if (a === "all") return -1;
-          if (b === "all") return 1;
-          return a.localeCompare(b);
-        });
+function renderTags() {
+  const tagBox = document.getElementById("tag-container");
+  const uniqueTags = [
+    "all",
+    ...new Set(tools.flatMap((t) => t.tags)),
+  ].sort((a, b) => {
+    if (a === "all") return -1;
+    if (b === "all") return 1;
+    return a.localeCompare(b);
+  });
 
-        tagBox.innerHTML = "";
-        uniqueTags.forEach((tag) => {
-          const btn = document.createElement("button");
-          btn.className = `tag-item ${activeTag === tag ? "active" : ""}`;
-          btn.textContent = tag === "all" ? "All Tools" : tag;
-          btn.onclick = () => {
-            activeTag = tag;
-            renderTags(); // Refresh tags to update active class
-            renderTools();
-          };
-          tagBox.appendChild(btn);
-        });
-      }
+  tagBox.innerHTML = "";
+  uniqueTags.forEach((tag) => {
+    const btn = document.createElement("button");
+    btn.className = "tag-item";
+    btn.classList.toggle("active", activeTag === tag);
+    btn.textContent = tag === "all" ? "All Tools" : tag;
+    btn.onclick = () => {
+      activeTag = tag;
+      renderTags();
+      renderTools();
+    };
+    tagBox.appendChild(btn);
+  });
+}
+
 function renderTools() {
   const rawQuery = document.getElementById("toolSearch").value.trim();
   if (!rawQuery) {
