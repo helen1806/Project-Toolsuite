@@ -711,6 +711,11 @@
     ></script>
   </head>
   <body>
+    <!-- Loading Spinner Overlay -->
+<div id="loadingOverlay" class="loading-overlay" style="display: none;">
+  <div class="spinner"></div>
+  <p>Loading tool...</p>
+</div>
     <div class="container">
       <header>
         <h1>Project Toolsuite</h1>
@@ -1230,6 +1235,36 @@ renderTools();
           deferredPrompt = null;
         });
       });
+
+// Loading Spinner on tool navigation
+function initSpinner() {
+  const overlay = document.getElementById('loadingOverlay');
+  if (!overlay) return;
+
+  function showSpinner() {
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+      if (overlay.style.display === 'flex') overlay.style.display = 'none';
+    }, 30000);
+  }
+
+  document.addEventListener('click', function(e) {
+    const toolLink = e.target.closest('.tool-link, .tool-card a, a[href*="tools/"]');
+    if (!toolLink) return;
+    // Only exclude tag filters and footer links – recent tools should also show spinner
+    if (toolLink.closest('.tag-list, .footer-links')) return;
+    let href = toolLink.getAttribute('href');
+    if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+      showSpinner();
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSpinner);
+} else {
+  initSpinner();
+}
     </script>
     <script src="./theme.js"></script>
   </body>
