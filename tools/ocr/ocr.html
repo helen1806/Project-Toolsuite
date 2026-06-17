@@ -33,9 +33,9 @@
     --space-lg: 32px;
     --space-xl: 48px;
 
-    --color-text: #000;
-    --color-muted: #666;
-    --color-bg: #fff;
+    --color-text: var(--text);
+    --color-muted: var(--muted);
+    --color-bg: var(--bg);
     --color-border: var(--border);
 }
 
@@ -126,7 +126,7 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-    background: #000;
+    background: var(--text);
 }
 
 /*Buttons*/
@@ -145,7 +145,7 @@ button {
 
 button:hover {
     background-color: var(--text);
-    color: #fff;
+    color: var(--bg);
     transform: translateY(-2px);
 }
 
@@ -169,9 +169,20 @@ a {
 
 a:hover {
     background-color: var(--text);
-    color: #fff;
+    color: var(--bg);
 }
 
+input[type="text"] {
+    display: block;
+    width: 100%;
+    font-family: var(--font-main);
+    border: 2px solid var(--color-border);
+    padding: var(--space-sm);
+    box-sizing: border-box;
+    margin: var(--space-md) 0;
+    background: var(--bg);
+    color: var(--text);
+}
 /*Footer*/
 footer {
     margin-top: var(--space-xl);
@@ -193,7 +204,6 @@ footer {
         min-height: 220px;
     }
 }
-
 
     </style>
     <link rel="stylesheet" href="../../theme.css">
