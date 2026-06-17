@@ -13,7 +13,7 @@
     <meta name="twitter:title" content="OCR Scanner - Project Toolsuite">
     <meta name="twitter:description" content="Extract text from images locally and securely.">
     <meta name="twitter:image" content="https://cdn-icons-png.flaticon.com/512/3522/3522262.png">
-    
+
     <link rel="stylesheet" href="../../assets/css/notifications.css">
     <script src="../../assets/js/notifications.js" defer></script>
     <style>
@@ -33,9 +33,9 @@
     --space-lg: 32px;
     --space-xl: 48px;
 
-    --color-text: #000;
-    --color-muted: #666;
-    --color-bg: #fff;
+    --color-text: var(--text);
+    --color-muted: var(--muted);
+    --color-bg: var(--bg);
     --color-border: var(--border);
 }
 
@@ -55,6 +55,11 @@ header {
     border-bottom: 4px solid var(--color-border);
     margin-bottom: var(--space-lg);
     padding-bottom: var(--space-sm);
+}
+
+header p {
+    color: var(--muted);
+    margin-top: 8px;
 }
 
 h1 {
@@ -81,12 +86,19 @@ input[type="file"] {
     margin-bottom: var(--space-sm);
 }
 
-#status {
+/* #status {
     padding: var(--space-xs) var(--space-sm);
     border: 2px dashed var(--color-border);
     display: inline-block;
     font-size: var(--text-sm);
     text-transform: uppercase;
+} */
+
+#status {
+    padding: 10px 14px;
+    border: 2px dashed var(--color-border);
+    background: var(--tag-bg);
+    color: var(--text);
 }
 
 /*Output Area */
@@ -101,6 +113,8 @@ input[type="file"] {
     margin-top: var(--space-sm);
     resize: vertical;
     transition: background-color 0.2s ease;
+    border-radius: 4px;
+    line-height: 1.6;
 }
 
 #output:focus {
@@ -110,6 +124,10 @@ input[type="file"] {
 
 #output::placeholder {
     color: var(--muted);
+}
+
+#output:hover {
+    background-color: var(--tag-bg);
 }
 
 /*Progress Bar*/
@@ -126,7 +144,11 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-    background: #000;
+    background: var(--text);
+}
+
+progress::-moz-progress-bar {
+    background: var(--text);
 }
 
 /*Buttons*/
@@ -145,12 +167,21 @@ button {
 
 button:hover {
     background-color: var(--text);
-    color: #fff;
+    color: var(--bg);
     transform: translateY(-2px);
 }
 
 button:active {
     transform: scale(0.96);
+}
+
+#loadUrlBtn {
+    margin-top: 0;
+    margin-bottom: 8px;
+}
+
+#status-container {
+    margin-top: 8px;
 }
 
 /*Helpers*/
@@ -169,7 +200,37 @@ a {
 
 a:hover {
     background-color: var(--text);
-    color: #fff;
+    color: var(--bg);
+}
+
+input[type="text"] {
+    display: block;
+    width: 100%;
+    font-family: var(--font-main);
+    border: 2px solid var(--color-border);
+    padding: var(--space-sm);
+    box-sizing: border-box;
+    margin: var(--space-md) 0;
+    background: var(--bg);
+    color: var(--text);
+}
+fix/theme-consistency-200
+
+input[type="file"]:hover,
+input[type="text"]:hover {
+    background-color: var(--tag-bg);
+}
+
+input[type="file"]:focus,
+input[type="text"]:focus {
+    outline: none;
+    border-color: var(--text);
+}
+
+section {
+    border: 2px solid var(--border);
+    padding: 24px;
+    background: var(--bg);
 }
 
 /*Footer*/
@@ -194,7 +255,6 @@ footer {
     }
 }
 
-    
     </style>
     <link rel="stylesheet" href="../../theme.css">
     <script src="../../theme.js"></script>
@@ -204,31 +264,46 @@ footer {
     <header>
         <h1>OCR Text Scanner</h1>
         <p>Extract text from images locally. Private. Secure. No server.</p>
-    
+
         <button class="dark-mode-toggle" onclick="toggleTheme()" id="themeBtn">DARK MODE</button></header>
+        
 
     <main>
         <section>
-            <input type="file" id="fileInput" accept="image/*">
-            <input type="text"  id="imageUrl" placeholder=""or paste  an image URL here...>
+            <input
+                type="file"
+                id="fileInput"
+                accept="image/*"
+                aria-label="Upload image for OCR"
+
+            >
+            <input
+                type="text"
+                id="imageUrl"
+                placeholder="or paste an image URL here..."
+                aria-label="Image URL input"
+
+            >
             <button id="loadUrlBtn">Load Image Url</button>
-            
+
             <div id="status-container">
                 <span id="status">System Status: Ready</span>
             </div>
 
             <progress id="progress" value="0" max="1" style="display:none;"></progress>
-            
-            <textarea id="output" placeholder="Recognized text will appear here..."></textarea>
-            
+
+            <textarea
+                id="output"
+                placeholder="Recognized text will appear here..."
+                aria-label="OCR output text"
+            ></textarea>
             <button id="copyBtn">Copy Text to Clipboard</button>
         </section>
     </main>
 
-    <footer>
-        <hr>
-        <p><a href="https://project-toolsuite.vercel.app">← Back to Home</a></p>
-    </footer>
+        <footer>
+            <p><a href="../../index.html">← Back to Home</a></p>
+        </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@4/dist/tesseract.min.js"></script>
     <script src="ocr-logic.js"></script>

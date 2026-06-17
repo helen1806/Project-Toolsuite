@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,6 @@
     <link rel="stylesheet" href="../../assets/css/notifications.css">
     <script src="../../assets/js/notifications.js" defer></script>
     <style>
-
         :root {
             --muted: #888888;
         }
@@ -145,9 +145,9 @@
             margin-top: 60px;
             font-size: 0.9rem;
         }
-    
     </style>
 </head>
+
 <body>
 
     <header>
@@ -161,23 +161,28 @@
             <h2>1. Merge PDFs</h2>
             <p>Combine multiple PDFs into one document.</p>
             <input type="file" id="mergeInput" accept=".pdf" multiple>
-            <button id="mergeBtn">Merge & Download</button>
+
+            <div id="mergeFileList"></div>
+
+            <button id="mergeBtn">
+                Merge & Download
+            </button>
         </section>
 
         <hr>
 
         <section>
-    <h2>2. PDF Splitter (Visual)</h2>
-    <p>Upload a PDF to see the pages, then click the ones you want to extract.</p>
-    <input type="file" id="splitInput" accept=".pdf">
-    
-    <div id="pdfPreviewContainer">
-        <em>Upload a file to see preview...</em>
-    </div>
+            <h2>2. PDF Splitter (Visual)</h2>
+            <p>Upload a PDF to see the pages, then click the ones you want to extract.</p>
+            <input type="file" id="splitInput" accept=".pdf">
 
-    <p>Selected Pages: <input type="text" id="splitRange" placeholder="e.g. 1, 3, 5"></p>
-    <button id="splitBtn">Extract & Download Selected</button>
-</section>
+            <div id="pdfPreviewContainer">
+                <em>Upload a file to see preview...</em>
+            </div>
+
+            <p>Selected Pages: <input type="text" id="splitRange" placeholder="e.g. 1, 3, 5-8"></p>
+            <button id="splitBtn">Extract & Download Selected</button>
+        </section>
 
         <hr>
 
@@ -191,14 +196,14 @@
         <p id="status">System Ready: Awaiting action...</p>
     </main>
 
-    <footer>
-        <hr>
-        <p><a href="https://project-toolsuite.vercel.app">← Back to Home</a></p>
-    </footer>
-    
-<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-<script src="pdf-logic.js"></script>
+        <footer>
+            <p><a href="../../index.html">← Back to Home</a></p>
+        </footer>
+
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <script src="pdf-logic.js"></script>
 
 </body>
+
 </html>

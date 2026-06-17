@@ -1,350 +1,906 @@
-// Global Audio Variables
-let audioContext;
+'use strict';
+
+
+// ===============================
+// AUDIO VARIABLES
+// ===============================
+
+let audioContext = null;
 let audioBuffer = null;
 let sourceNode = null;
 let isPlaying = false;
 
-// DOM Elements
-const fileInput = document.getElementById('file-input');
-const canvas = document.getElementById('waveform-canvas');
-const ctx = canvas.getContext('2d');
-const startSlider = document.getElementById('start-slider');
-const endSlider = document.getElementById('end-slider');
-const overlayLeft = document.getElementById('overlay-left');
-const overlayRight = document.getElementById('overlay-right');
-const startTimeDisplay = document.getElementById('start-time-display');
-const endTimeDisplay = document.getElementById('end-time-display');
-const durationDisplay = document.getElementById('duration-display');
-const previewBtn = document.getElementById('btn-preview');
-const downloadBtn = document.getElementById('btn-download');
 
-// Event Listeners
-fileInput.addEventListener('change', handleFileUpload);
-startSlider.addEventListener('input', updateUI);
-endSlider.addEventListener('input', updateUI);
-previewBtn.addEventListener('click', togglePreview);
-downloadBtn.addEventListener('click', downloadTrimmedAudio);
+// ===============================
+// DOM ELEMENTS
+// ===============================
 
-async function handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (!file) return;
+const fileInput = document.getElementById("file-input");
 
-    // Reset UI
-    document.getElementById('waveform-ui').style.display = 'block';
-    document.getElementById('slider-ui').style.display = 'block';
-    document.getElementById('controls-ui').style.display = 'flex';
-    previewBtn.innerText = "▶ Preview Trim";
+const canvas = document.getElementById("waveform-canvas");
 
-    // Initialize Audio Context
-    if (!audioContext) audioContext = new (window.AudioContext || window.webkitAudioContext)();
+const ctx = canvas 
+    ? canvas.getContext("2d") 
+    : null;
 
-    const arrayBuffer = await file.arrayBuffer();
 
-    try {
-        audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-        drawWaveform();
-        resetSliders();
-        updateUI();
-    } catch (error) {
-        notify.error("Error decoding audio file. Please try a valid MP3 or WAV.");
-        console.error(error);
-    }
+const startSlider =
+document.getElementById("start-slider");
+
+
+const endSlider =
+document.getElementById("end-slider");
+
+
+const overlayLeft =
+document.getElementById("overlay-left");
+
+
+const overlayRight =
+document.getElementById("overlay-right");
+
+
+const startTimeDisplay =
+document.getElementById("start-time-display");
+
+
+const endTimeDisplay =
+document.getElementById("end-time-display");
+
+
+const durationDisplay =
+document.getElementById("duration-display");
+
+
+const previewBtn =
+document.getElementById("btn-preview");
+
+
+const downloadBtn =
+document.getElementById("btn-download");
+
+
+
+
+// ===============================
+// EVENT LISTENERS
+// ===============================
+
+
+if(fileInput){
+
+    fileInput.addEventListener(
+        "change",
+        handleFileUpload
+    );
+
 }
 
-function drawWaveform() {
-    const width = canvas.width = canvas.offsetWidth;
-    const height = canvas.height = canvas.offsetHeight;
 
-    // Get raw data from left channel (usually enough for visualization)
-    const rawData = audioBuffer.getChannelData(0);
-    const step = Math.ceil(rawData.length / width);
-    const amp = height / 2;
+if(startSlider){
 
-    ctx.clearRect(0, 0, width, height);
-    ctx.fillStyle = '#007acc';
-    ctx.beginPath();
+    startSlider.addEventListener(
+        "input",
+        updateUI
+    );
 
-    for (let i = 0; i < width; i++) {
-        let min = 1.0;
-        let max = -1.0;
+}
 
-        // Downsample for canvas width
-        for (let j = 0; j < step; j++) {
-            const datum = rawData[(i * step) + j];
-            if (datum < min) min = datum;
-            if (datum > max) max = datum;
+
+if(endSlider){
+
+    endSlider.addEventListener(
+        "input",
+        updateUI
+    );
+
+}
+
+
+if(previewBtn){
+
+    previewBtn.addEventListener(
+        "click",
+        togglePreview
+    );
+
+}
+
+
+if(downloadBtn){
+
+    downloadBtn.addEventListener(
+        "click",
+        downloadTrimmedAudio
+    );
+
+}
+
+
+
+
+// ===============================
+// UPLOAD AUDIO
+// ===============================
+
+
+async function handleFileUpload(event){
+
+
+    const file =
+    event.target.files[0];
+
+
+    if(!file)
+        return;
+
+
+
+    document.getElementById(
+        "waveform-ui"
+    ).style.display="block";
+
+
+    document.getElementById(
+        "slider-ui"
+    ).style.display="block";
+
+
+    document.getElementById(
+        "controls-ui"
+    ).style.display="flex";
+
+
+
+    if(!audioContext){
+
+        audioContext =
+        new (
+            window.AudioContext ||
+            window.webkitAudioContext
+        )();
+
+    }
+
+
+
+    try{
+
+
+        const arrayBuffer =
+        await file.arrayBuffer();
+
+
+
+        audioBuffer =
+        await audioContext.decodeAudioData(
+            arrayBuffer
+        );
+
+
+        drawWaveform();
+
+
+        resetSliders();
+
+
+        updateUI();
+
+
+
+    }
+    catch(error){
+
+
+        console.error(error);
+
+
+        alert(
+            "Invalid audio file"
+        );
+
+
+    }
+
+}
+
+
+
+
+// ===============================
+// DRAW WAVEFORM
+// ===============================
+
+
+function drawWaveform(){
+
+
+    if(!canvas || !ctx || !audioBuffer)
+        return;
+
+
+
+    const width =
+    canvas.width =
+    canvas.offsetWidth;
+
+
+
+    const height =
+    canvas.height =
+    canvas.offsetHeight;
+
+
+
+    const rawData =
+    audioBuffer.getChannelData(0);
+
+
+
+    const step =
+    Math.ceil(
+        rawData.length / width
+    );
+
+
+
+    const amp =
+    height / 2;
+
+
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+
+    ctx.fillStyle =
+    "#00ff88";
+
+
+
+    for(
+        let i=0;
+        i<width;
+        i++
+    ){
+
+
+        let min=1;
+
+        let max=-1;
+
+
+
+        for(
+            let j=0;
+            j<step;
+            j++
+        ){
+
+
+            const value =
+            rawData[
+                i * step + j
+            ];
+
+
+
+            if(value < min)
+                min=value;
+
+
+
+            if(value > max)
+                max=value;
+
+
         }
 
-        // Draw vertical bar for this pixel column
-        ctx.fillRect(i, (1 + min) * amp, 1, Math.max(1, (max - min) * amp));
+
+
+        ctx.fillRect(
+
+            i,
+
+            (1+min)*amp,
+
+            1,
+
+            Math.max(
+                1,
+                (max-min)*amp
+            )
+
+        );
+
+
     }
+
+
 }
 
-function resetSliders() {
+
+
+
+// ===============================
+// RESET SLIDER
+// ===============================
+
+
+function resetSliders(){
+
+
     startSlider.value = 0;
+
     endSlider.value = 100;
+
+
 }
 
-function updateUI() {
-    if (!audioBuffer) return;
 
-    let startVal = parseFloat(startSlider.value);
-    let endVal = parseFloat(endSlider.value);
 
-    // Prevent cross-over
-    if (startVal >= endVal) {
-        startVal = endVal - 0.1;
-        startSlider.value = startVal;
-    }
 
-    // Update Overlays
-    overlayLeft.style.width = startVal + "%";
-    overlayRight.style.width = (100 - endVal) + "%";
+// ===============================
+// UPDATE DISPLAY
+// ===============================
 
-    // Update Text
-    const duration = audioBuffer.duration;
-    const startTime = (duration * startVal) / 100;
-    const endTime = (duration * endVal) / 100;
 
-    startTimeDisplay.innerText = `Start: ${startTime.toFixed(2)}s`;
-    endTimeDisplay.innerText = `End: ${endTime.toFixed(2)}s`;
-    durationDisplay.innerText = `Total: ${duration.toFixed(2)}s`;
-}
+function updateUI(){
 
-function togglePreview() {
-    if (isPlaying) {
-        if (sourceNode) sourceNode.stop();
-        isPlaying = false;
-        previewBtn.innerText = "▶ Preview Trim";
+
+    if(!audioBuffer)
         return;
+
+
+
+    let start =
+    Number(startSlider.value);
+
+
+
+    let end =
+    Number(endSlider.value);
+
+
+
+    if(start >= end){
+
+
+        start =
+        end - 0.1;
+
+
+        startSlider.value =
+        start;
+
+
     }
 
-    if (!audioBuffer) return;
 
-    const duration = audioBuffer.duration;
-    const startVal = parseFloat(startSlider.value);
-    const endVal = parseFloat(endSlider.value);
 
-    const startTime = (duration * startVal) / 100;
-    const endTime = (duration * endVal) / 100;
-    const playDuration = endTime - startTime;
 
-    sourceNode = audioContext.createBufferSource();
-    sourceNode.buffer = audioBuffer;
-    sourceNode.connect(audioContext.destination);
+    overlayLeft.style.width =
+    start + "%";
 
-    sourceNode.start(0, startTime, playDuration);
-    isPlaying = true;
-    previewBtn.innerText = "⏹ Stop Preview";
 
-    sourceNode.onended = () => {
-        isPlaying = false;
-        previewBtn.innerText = "▶ Preview Trim";
+
+    overlayRight.style.width =
+    (100-end)+"%";
+
+
+
+
+    const total =
+    audioBuffer.duration;
+
+
+
+    const startTime =
+    total * start /100;
+
+
+
+    const endTime =
+    total * end /100;
+
+
+
+
+    startTimeDisplay.textContent =
+    `Start: ${startTime.toFixed(2)}s`;
+
+
+
+    endTimeDisplay.textContent =
+    `End: ${endTime.toFixed(2)}s`;
+
+
+
+    durationDisplay.textContent =
+    `Total: ${total.toFixed(2)}s`;
+
+
+}
+
+
+
+
+// ===============================
+// PREVIEW
+// ===============================
+
+
+function togglePreview(){
+
+
+    if(isPlaying){
+
+
+        if(sourceNode)
+            sourceNode.stop();
+
+
+
+        isPlaying=false;
+
+
+        previewBtn.textContent =
+        "▶ Preview Trim";
+
+
+        return;
+
+    }
+
+
+
+
+    if(!audioBuffer)
+        return;
+
+
+
+
+    const duration =
+    audioBuffer.duration;
+
+
+
+    const start =
+    duration *
+    Number(startSlider.value)
+    /100;
+
+
+
+    const end =
+    duration *
+    Number(endSlider.value)
+    /100;
+
+
+
+
+    sourceNode =
+    audioContext.createBufferSource();
+
+
+
+    sourceNode.buffer =
+    audioBuffer;
+
+
+
+    sourceNode.connect(
+        audioContext.destination
+    );
+
+
+
+    sourceNode.start(
+        0,
+        start,
+        end-start
+    );
+
+
+
+    isPlaying=true;
+
+
+
+    previewBtn.textContent =
+    "⏹ Stop Preview";
+
+
+
+
+    sourceNode.onended =
+    ()=>{
+
+
+        isPlaying=false;
+
+
+        previewBtn.textContent =
+        "▶ Preview Trim";
+
+
     };
+
+
 }
 
-function downloadTrimmedAudio() {
-    if (!audioBuffer) return;
 
-    const duration = audioBuffer.duration;
-    const startVal = parseFloat(startSlider.value);
-    const endVal = parseFloat(endSlider.value);
 
-    const startTime = (duration * startVal) / 100;
-    const endTime = (duration * endVal) / 100;
 
-    // 1. Create a new buffer for the trimmed section
-    const sampleRate = audioBuffer.sampleRate;
-    const startFrame = Math.floor(startTime * sampleRate);
-    const endFrame = Math.floor(endTime * sampleRate);
-    const frameCount = endFrame - startFrame;
-    const channels = audioBuffer.numberOfChannels;
+// ===============================
+// DOWNLOAD WAV
+// ===============================
 
-    const trimmedBuffer = audioContext.createBuffer(channels, frameCount, sampleRate);
 
-    // 2. Copy data
-    for (let i = 0; i < channels; i++) {
-        const channelData = audioBuffer.getChannelData(i);
-        const trimmedData = trimmedBuffer.getChannelData(i);
-        // Optimized copy
-        trimmedData.set(channelData.subarray(startFrame, endFrame));
+function downloadTrimmedAudio(){
+
+
+    if(!audioBuffer)
+        return;
+
+
+
+    const sampleRate =
+    audioBuffer.sampleRate;
+
+
+
+    const start =
+    Math.floor(
+
+        audioBuffer.duration *
+
+        Number(startSlider.value)
+
+        /100 *
+
+        sampleRate
+
+    );
+
+
+
+    const end =
+    Math.floor(
+
+        audioBuffer.duration *
+
+        Number(endSlider.value)
+
+        /100 *
+
+        sampleRate
+
+    );
+
+
+
+    const frameCount =
+    end-start;
+
+
+
+    const channels =
+    audioBuffer.numberOfChannels;
+
+
+
+    const newBuffer =
+    audioContext.createBuffer(
+
+        channels,
+
+        frameCount,
+
+        sampleRate
+
+    );
+
+
+
+
+    for(
+        let ch=0;
+        ch<channels;
+        ch++
+    ){
+
+
+        newBuffer
+        .getChannelData(ch)
+        .set(
+
+            audioBuffer
+            .getChannelData(ch)
+            .subarray(
+                start,
+                end
+            )
+
+        );
+
+
     }
 
-    // 3. Encode to WAV (Native JS)
-    const wavBlob = bufferToWave(trimmedBuffer, frameCount);
 
-    // 4. Trigger Download
-    const url = URL.createObjectURL(wavBlob);
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = 'trimmed_audio.wav';
-    anchor.click();
+
+    const wav =
+    bufferToWave(
+        newBuffer,
+        frameCount
+    );
+
+
+
+    const url =
+    URL.createObjectURL(wav);
+
+
+
+    const link =
+    document.createElement("a");
+
+
+    link.href=url;
+
+
+    link.download =
+    "trimmed_audio.wav";
+
+
+    link.click();
+
+
+
     URL.revokeObjectURL(url);
+
+
 }
 
-// Helper: Convert AudioBuffer to WAV Blob
-function bufferToWave(abuffer, len) {
-
-    const numOfChan = abuffer.numberOfChannels;
-
-    const length = len * numOfChan * 2 + 44;
-
-    const buffer = new ArrayBuffer(length);
-
-    const view = new DataView(buffer);
-
-    const channels = [];
-
-    let sample;
-
-    let offset = 0;
-
-
-    // ONLY HEADER POSITION
-    let pos = 0;
 
 
 
-    // =========================
-    // WAV HEADER
-    // =========================
-
-    setUint32(0x46464952); // RIFF
-
-    setUint32(length - 8);
-
-    setUint32(0x45564157); // WAVE
 
 
+// ===============================
+// WAV ENCODER FIXED
+// ===============================
 
-    setUint32(0x20746d66); // fmt
 
-    setUint32(16);
+function bufferToWave(buffer,len){
 
-    setUint16(1);
 
-    setUint16(numOfChan);
+    const channels =
+    buffer.numberOfChannels;
 
-    setUint32(abuffer.sampleRate);
 
-    setUint32(
-        abuffer.sampleRate * 2 * numOfChan
-    );
-
-    setUint16(numOfChan * 2);
-
-    setUint16(16);
+    const bytes =
+    2;
 
 
 
-    setUint32(0x61746164); // data
+    const dataSize =
+    len *
+    channels *
+    bytes;
 
-    setUint32(
-        len * numOfChan * 2
+
+
+    const arrayBuffer =
+    new ArrayBuffer(
+        44 + dataSize
     );
 
 
 
+    const view =
+    new DataView(
+        arrayBuffer
+    );
 
-    // =========================
-    // AUDIO DATA
-    // =========================
 
 
-    for (let i = 0; i < numOfChan; i++) {
+    let offset=0;
 
-        channels.push(
-            abuffer.getChannelData(i)
+
+
+
+    function uint32(value){
+
+        view.setUint32(
+            offset,
+            value,
+            true
+        );
+
+
+        offset+=4;
+
+    }
+
+
+
+    function uint16(value){
+
+        view.setUint16(
+            offset,
+            value,
+            true
+        );
+
+
+        offset+=2;
+
+    }
+
+
+
+
+
+    // HEADER
+
+
+    uint32(0x46464952);
+
+    uint32(
+        36 + dataSize
+    );
+
+
+    uint32(0x45564157);
+
+
+    uint32(0x20746d66);
+
+
+    uint32(16);
+
+
+    uint16(1);
+
+
+    uint16(channels);
+
+
+    uint32(
+        buffer.sampleRate
+    );
+
+
+    uint32(
+        buffer.sampleRate *
+        channels *
+        bytes
+    );
+
+
+    uint16(
+        channels *
+        bytes
+    );
+
+
+    uint16(16);
+
+
+
+    uint32(0x61746164);
+
+
+    uint32(dataSize);
+
+
+
+
+
+    const channelData=[];
+
+
+
+    for(
+        let i=0;
+        i<channels;
+        i++
+    ){
+
+        channelData.push(
+            buffer.getChannelData(i)
         );
 
     }
 
 
 
-    // IMPORTANT FIX
-    // Separate frame counter
-    let frameIdx = 0;
 
 
 
-    while (frameIdx < len) {
+    // AUDIO DATA LOOP
 
-        for (let i = 0; i < numOfChan; i++) {
+    for(
+        let frame=0;
+        frame<len;
+        frame++
+    ){
 
 
-            sample = Math.max(
+        for(
+            let ch=0;
+            ch<channels;
+            ch++
+        ){
+
+
+            let sample =
+            channelData[ch][frame];
+
+
+
+            sample =
+            Math.max(
                 -1,
                 Math.min(
                     1,
-                    channels[i][frameIdx]
+                    sample
                 )
             );
 
 
 
             sample =
-                sample < 0
-                    ?
-                    sample * 0x8000
-                    :
-                    sample * 0x7FFF;
+            sample < 0
+
+            ?
+
+            sample * 32768
+
+            :
+
+            sample * 32767;
 
 
 
             view.setInt16(
-                44 + offset,
+
+                offset,
+
                 sample,
+
                 true
+
             );
 
 
-            offset += 2;
+            offset +=2;
+
 
         }
 
 
-        frameIdx++;
-
     }
+
 
 
 
     return new Blob(
-        [buffer],
+        [
+            arrayBuffer
+        ],
         {
-            type: "audio/wav"
+            type:"audio/wav"
         }
     );
 
-
-
-
-    function setUint16(data) {
-
-        view.setUint16(
-            pos,
-            data,
-            true
-        );
-
-
-        pos += 2;
-
-    }
-
-
-
-    function setUint32(data) {
-
-        view.setUint32(
-            pos,
-            data,
-            true
-        );
-
-
-        pos += 4;
-
-    }
 
 }

@@ -83,16 +83,22 @@ This project is built using:
 ```text
 Project-Toolsuite/
 │
+├── .github/
 ├── assets/
-├── css/
-├── js/
-├── images/
-├── sw.js
-├── index.html
+├── tools/
+├── CODE_OF_CONDUCT.md
 ├── CONTRIBUTING.md
+├── LEADERBOARD.md
 ├── LICENSE
+├── README.md
 ├── SECURITY.md
-└── README.md
+├── contributers.html
+├── index.html
+├── manifest.json
+├── privacy.html
+├── sw.js
+├── theme.css
+└── theme.js
 ```
 
 ---
@@ -152,37 +158,42 @@ See the `LICENSE` file for complete details.
 
 | Rank | Contributor | Points | Commits |
 |-----:|------------|-------:|--------:|
-| 1 | @Winter262005 | 230 | 230 |
+| 1 | @Winter262005 | 263 | 263 |
 | 2 | @VITianYash42 | 20 | 20 |
-| 3 | @Dru-429 | 13 | 13 |
-| 4 | @AdityaMittal08 | 9 | 9 |
-| 5 | @Ishwarpatra | 7 | 7 |
-| 6 | @aditijha509 | 6 | 6 |
-| 7 | @JaiHarsan | 5 | 5 |
-| 8 | @rach-kanc | 4 | 4 |
-| 9 | @SamXop123 | 4 | 4 |
-| 10 | @KaustAbhinand | 3 | 3 |
-| 11 | @Pranavkale11 | 3 | 3 |
-| 12 | @ShaikhWarsi | 3 | 3 |
-| 13 | @SuyashSoni10 | 3 | 3 |
-| 14 | @ritiktyagiai | 3 | 3 |
-| 15 | @Aharshi3614 | 2 | 2 |
-| 16 | @nikhil1205-ai | 2 | 2 |
-| 17 | @VedanshN | 2 | 2 |
-| 18 | @shreyagupta2006 | 2 | 2 |
-| 19 | @androidvitb | 1 | 1 |
-| 20 | @anshul-lh44 | 1 | 1 |
-| 21 | @CharlapallyDivyani | 1 | 1 |
-| 22 | @Laasya2007 | 1 | 1 |
-| 23 | @PulkitSachdev25 | 1 | 1 |
-| 24 | @Shlok-Dwivedi | 1 | 1 |
-| 25 | @Vanshikaram | 1 | 1 |
-| 26 | @vishakhaojha57 | 1 | 1 |
-| 27 | @architsinghal0005 | 1 | 1 |
-| 28 | @helen1806 | 1 | 1 |
-| 29 | @jahareena-06 | 1 | 1 |
-| 30 | @Shweta-Bairagi0312 | 1 | 1 |
-| 31 | @yhcb21 | 1 | 1 |
+| 3 | @rach-kanc | 14 | 14 |
+| 4 | @Dru-429 | 13 | 13 |
+| 5 | @AdityaMittal08 | 9 | 9 |
+| 6 | @Ishwarpatra | 9 | 9 |
+| 7 | @love25-codes | 9 | 9 |
+| 8 | @adikulkarni006 | 8 | 8 |
+| 9 | @ritiktyagiai | 8 | 8 |
+| 10 | @aditijha509 | 6 | 6 |
+| 11 | @JaiHarsan | 5 | 5 |
+| 12 | @ShrutiiShinde05 | 5 | 5 |
+| 13 | @SamXop123 | 4 | 4 |
+| 14 | @KaustAbhinand | 3 | 3 |
+| 15 | @Pranavkale11 | 3 | 3 |
+| 16 | @Sargam-Ghagre | 3 | 3 |
+| 17 | @ShaikhWarsi | 3 | 3 |
+| 18 | @SuyashSoni10 | 3 | 3 |
+| 19 | @Aharshi3614 | 2 | 2 |
+| 20 | @dishant62 | 2 | 2 |
+| 21 | @nikhil1205-ai | 2 | 2 |
+| 22 | @VedanshN | 2 | 2 |
+| 23 | @shreyagupta2006 | 2 | 2 |
+| 24 | @androidvitb | 1 | 1 |
+| 25 | @anshul-lh44 | 1 | 1 |
+| 26 | @CharlapallyDivyani | 1 | 1 |
+| 27 | @Laasya2007 | 1 | 1 |
+| 28 | @PulkitSachdev25 | 1 | 1 |
+| 29 | @Shlok-Dwivedi | 1 | 1 |
+| 30 | @Vanshikaram | 1 | 1 |
+| 31 | @vishakhaojha57 | 1 | 1 |
+| 32 | @architsinghal0005 | 1 | 1 |
+| 33 | @helen1806 | 1 | 1 |
+| 34 | @jahareena-06 | 1 | 1 |
+| 35 | @Shweta-Bairagi0312 | 1 | 1 |
+| 36 | @yhcb21 | 1 | 1 |
 
 <!-- LEADERBOARD_END -->
 

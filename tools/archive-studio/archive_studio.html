@@ -328,8 +328,13 @@
 <body>
 
     <div class="app-container">
+        
         <aside class="sidebar">
             <div class="brand">ARCHIVE<span>_STUDIO</span></div>
+            <button class="dark-mode-toggle" onclick="toggleTheme()" id="themeBtn">
+                DARK MODE
+            </button>
+            
             <div class="nav-group">
                 <button class="nav-item active" onclick="app.switchModule('extractor')">
                     <span>📂</span> EXTRACTOR
@@ -396,7 +401,9 @@
 
         </main>
     </div>
-
+    <footer>
+        <a href="../../index.html">&larr; Back to Home</a>
+    </footer>
     <script src="studio_archive.js"></script>
 
 </body>

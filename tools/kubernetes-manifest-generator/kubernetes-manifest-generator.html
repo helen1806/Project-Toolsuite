@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kubernetes Manifest Generator - Project Toolsuite</title>
+    <meta name="description" content="Generate production-ready Kubernetes YAML manifests for Deployments, Services, Ingress, ConfigMaps, Secrets, and PVCs in real-time.">
+    <link rel="stylesheet" href="../../theme.css">
+    <link rel="stylesheet" href="kubernetes-manifest-generator.css">
+    
+    <link rel="stylesheet" href="../../assets/css/notifications.css">
+    <script src="../../assets/js/notifications.js" defer></script>
+    <script src="../../theme.js"></script>
+</head>
+<body>
+
+    <header>
+        <div style="display: flex; align-items: center;">
+            <button class="nav-btn" onclick="window.location.href='../../index.html'">  ← Back to Home</button>
+            <h1>K8s Manifest Generator</h1>
+        </div>
+        <p>Visually build production-ready Kubernetes YAML manifests in real-time.</p>
+        <button id="themeBtn" class="dark-mode-toggle" onclick="toggleTheme()">DARK MODE</button>
+    </header>
+
+    <main>
+        <!-- Resource Tab Selector -->
+        <div class="tabs-container">
+            <button class="tab-btn active" data-tab="deployment">Deployment</button>
+            <button class="tab-btn" data-tab="service">Service</button>
+            <button class="tab-btn" data-tab="ingress">Ingress</button>
+            <button class="tab-btn" data-tab="configmap">ConfigMap</button>
+            <button class="tab-btn" data-tab="secret">Secret</button>
+            <button class="tab-btn" data-tab="pvc">PVC</button>
+        </div>
+
+        <div class="generator-split">
+            <!-- Left Panel: Settings Form -->
+            <div class="card">
+                <h2 class="card-title" id="form-card-title">Deployment Settings</h2>
+                
+                <!-- Common Metadata (Applied to all resource types) -->
+                <div class="metadata-section">
+                    <h3 class="section-subtitle">Common Metadata</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="resName">Resource Name</label>
+                            <input type="text" id="resName" value="my-app" autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="form-group">
+                            <label for="resNamespace">Namespace</label>
+                            <input type="text" id="resNamespace" value="default" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="resLabels">Labels (e.g. app:my-app, env:prod)</label>
+                            <input type="text" id="resLabels" value="app: my-app" placeholder="key: value, key2: value2" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+                </div>
+
+                <hr class="section-divider">
+
+                <!-- Tab Panel: Deployment -->
+                <div class="tab-panel active" id="panel-deployment">
+                    <h3 class="section-subtitle">Deployment Configuration</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="depReplicas">Replicas</label>
+                            <input type="number" id="depReplicas" value="3" min="0" max="100">
+                        </div>
+                        <div class="form-group">
+                            <label for="depPort">Container Port</label>
+                            <input type="number" id="depPort" value="80" min="1" max="65535">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="depImage">Container Image</label>
+                        <input type="text" id="depImage" value="nginx:alpine" placeholder="e.g. nginx:latest" autocomplete="off" spellcheck="false">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="depCpuRequest">CPU Request</label>
+                            <input type="text" id="depCpuRequest" placeholder="e.g. 100m, 0.5" autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="form-group">
+                            <label for="depCpuLimit">CPU Limit</label>
+                            <input type="text" id="depCpuLimit" placeholder="e.g. 200m, 1" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="depMemRequest">Memory Request</label>
+                            <input type="text" id="depMemRequest" placeholder="e.g. 128Mi, 256Mi" autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="form-group">
+                            <label for="depMemLimit">Memory Limit</label>
+                            <input type="text" id="depMemLimit" placeholder="e.g. 256Mi, 512Mi" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+
+                    <!-- Environment Variables Table -->
+                    <div class="form-group">
+                        <label>Environment Variables</label>
+                        <div id="env-variables-container" class="kv-container">
+                            <!-- JS will dynamically populate rows here -->
+                        </div>
+                        <button type="button" class="btn btn-sm btn-accent" id="add-env-btn">+ Add Env Variable</button>
+                    </div>
+                </div>
+
+                <!-- Tab Panel: Service -->
+                <div class="tab-panel" id="panel-service">
+                    <h3 class="section-subtitle">Service Configuration</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="svcType">Service Type</label>
+                            <select id="svcType">
+                                <option value="ClusterIP" selected>ClusterIP</option>
+                                <option value="NodePort">NodePort</option>
+                                <option value="LoadBalancer">LoadBalancer</option>
+                                <option value="ExternalName">ExternalName</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="svcPort">Port</label>
+                            <input type="number" id="svcPort" value="80" min="1" max="65535">
+                        </div>
+                        <div class="form-group">
+                            <label for="svcTargetPort">Target Port</label>
+                            <input type="text" id="svcTargetPort" value="80" placeholder="e.g. 80 or http" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="svcNodePortGroup" style="display: none;">
+                        <label for="svcNodePort">NodePort (30000-32767)</label>
+                        <input type="number" id="svcNodePort" placeholder="e.g. 30080" min="30000" max="32767">
+                    </div>
+
+                    <div class="form-group" id="svcExternalNameGroup" style="display: none;">
+                        <label for="svcExternalName">External Name DNS</label>
+                        <input type="text" id="svcExternalName" placeholder="my.database.example.com" autocomplete="off" spellcheck="false">
+                    </div>
+
+                    <div class="form-group" id="svcSelectorGroup">
+                        <label for="svcSelector">Selector Labels (e.g. app:my-app)</label>
+                        <input type="text" id="svcSelector" value="app: my-app" placeholder="key: value, key2: value2" autocomplete="off" spellcheck="false">
+                    </div>
+                </div>
+
+                <!-- Tab Panel: Ingress -->
+                <div class="tab-panel" id="panel-ingress">
+                    <h3 class="section-subtitle">Ingress Configuration</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ingClass">Ingress Class Name</label>
+                            <input type="text" id="ingClass" value="nginx" placeholder="e.g. nginx, gce" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ingHost">Host Domain</label>
+                            <input type="text" id="ingHost" value="my-app.example.com" placeholder="e.g. example.com" autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="form-group" style="max-width: 150px;">
+                            <label for="ingPath">Path</label>
+                            <input type="text" id="ingPath" value="/" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="ingSvcName">Backend Service Name</label>
+                            <input type="text" id="ingSvcName" value="my-app-service" autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="form-group" style="max-width: 150px;">
+                            <label for="ingSvcPort">Backend Port</label>
+                            <input type="number" id="ingSvcPort" value="80" min="1" max="65535">
+                        </div>
+                    </div>
+
+                    <hr class="section-divider-dashed">
+
+                    <!-- TLS config -->
+                    <div class="form-group">
+                        <label class="checkbox-row">
+                            <input type="checkbox" id="ingTlsEnable">
+                            Enable TLS / HTTPS
+                        </label>
+                        <div class="sub-settings-panel" id="ingTlsSubPanel">
+                            <div class="form-group" style="margin-bottom: 0;">
+                                <label for="ingTlsSecret">TLS Secret Name</label>
+                                <input type="text" id="ingTlsSecret" value="my-app-tls" placeholder="e.g. my-app-tls" autocomplete="off" spellcheck="false">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Panel: ConfigMap -->
+                <div class="tab-panel" id="panel-configmap">
+                    <h3 class="section-subtitle">ConfigMap Configuration</h3>
+                    
+                    <div class="form-group">
+                        <label>Data Key-Value Pairs</label>
+                        <div id="cm-data-container" class="kv-container">
+                            <!-- JS will dynamically populate rows here -->
+                        </div>
+                        <button type="button" class="btn btn-sm btn-accent" id="add-cm-btn">+ Add Data Row</button>
+                    </div>
+                </div>
+
+                <!-- Tab Panel: Secret -->
+                <div class="tab-panel" id="panel-secret">
+                    <h3 class="section-subtitle">Secret Configuration</h3>
+                    
+                    <div class="form-group">
+                        <label for="secType">Secret Type</label>
+                        <select id="secType">
+                            <option value="Opaque" selected>Opaque (Generic Key-Value)</option>
+                            <option value="dockerconfigjson">dockerconfigjson (Docker Registry)</option>
+                            <option value="tls">tls (TLS Certificate)</option>
+                        </select>
+                    </div>
+
+                    <!-- Secret Panel: Opaque -->
+                    <div id="secOpaquePanel" class="sec-type-panel">
+                        <label class="checkbox-row" style="margin-bottom: 15px;">
+                            <input type="checkbox" id="secBase64Encode" checked>
+                            Automatically Base64 encode values in YAML
+                        </label>
+                        <div id="sec-data-container" class="kv-container">
+                            <!-- JS will dynamically populate rows here -->
+                        </div>
+                        <button type="button" class="btn btn-sm btn-accent" id="add-sec-btn">+ Add Secret Row</button>
+                    </div>
+
+                    <!-- Secret Panel: Docker Registry -->
+                    <div id="secDockerPanel" class="sec-type-panel" style="display: none;">
+                        <div class="form-group">
+                            <label for="secDockerServer">Docker Registry Server</label>
+                            <input type="text" id="secDockerServer" value="https://index.docker.io/v1/" autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="secDockerUsername">Username</label>
+                                <input type="text" id="secDockerUsername" placeholder="e.g. dockeruser" autocomplete="off" spellcheck="false">
+                            </div>
+                            <div class="form-group">
+                                <label for="secDockerPassword">Password</label>
+                                <input type="text" id="secDockerPassword" placeholder="e.g. password" autocomplete="off" spellcheck="false">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="secDockerEmail">Email Address</label>
+                            <input type="text" id="secDockerEmail" placeholder="e.g. user@example.com" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+
+                    <!-- Secret Panel: TLS -->
+                    <div id="secTlsPanel" class="sec-type-panel" style="display: none;">
+                        <div class="form-group">
+                            <label for="secTlsCert">TLS Certificate (PEM format or literal string)</label>
+                            <textarea id="secTlsCert" rows="4" placeholder="-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----" spellcheck="false"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="secTlsKey">TLS Private Key (PEM format or literal string)</label>
+                            <textarea id="secTlsKey" rows="4" placeholder="-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----" spellcheck="false"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab Panel: PVC -->
+                <div class="tab-panel" id="panel-pvc">
+                    <h3 class="section-subtitle">PVC Configuration</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pvcStorageClass">Storage Class Name</label>
+                            <input type="text" id="pvcStorageClass" value="standard" placeholder="e.g. standard, gp2" autocomplete="off" spellcheck="false">
+                        </div>
+                        <div class="form-group" style="max-width: 180px;">
+                            <label for="pvcStorageSize">Storage Size</label>
+                            <input type="text" id="pvcStorageSize" value="10Gi" placeholder="e.g. 10Gi, 500Mi" autocomplete="off" spellcheck="false">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Access Modes</label>
+                        <label class="checkbox-row">
+                            <input type="checkbox" id="pvcRWO" checked>
+                            ReadWriteOnce (RWO)
+                        </label>
+                        <label class="checkbox-row">
+                            <input type="checkbox" id="pvcROX">
+                            ReadOnlyMany (ROX)
+                        </label>
+                        <label class="checkbox-row">
+                            <input type="checkbox" id="pvcRWX">
+                            ReadWriteMany (RWX)
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel: YAML Preview & Actions -->
+            <div class="card" style="height: fit-content;">
+                <div class="preview-header">
+                    <h2 class="card-title" style="border: none; margin-bottom: 0; padding-bottom: 0;">YAML Preview</h2>
+                    <!-- Combined YAML controls -->
+                    <div class="combined-controls">
+                        <button class="btn btn-sm btn-accent" id="stage-resource-btn">Stage YAML</button>
+                        <button class="btn btn-sm" id="view-combined-btn">Show Staged (0)</button>
+                    </div>
+                </div>
+                
+                <div class="preview-container">
+                    <div class="preview-actions">
+                        <button class="btn" onclick="copyYAML()">Copy YAML</button>
+                        <button class="btn" onclick="downloadYAML()">Download</button>
+                        <button class="btn btn-danger" id="clear-staged-btn" style="display: none;" onclick="clearStaged()">Clear Staged</button>
+                    </div>
+                    <textarea id="previewArea" class="preview-area" readonly spellcheck="false"></textarea>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="kubernetes-manifest-generator.js"></script>
+</body>
+</html>

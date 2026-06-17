@@ -1,83 +1,335 @@
 'use strict';
 
-// 1. STATE INITIALIZATION
-// Using a versioned key to avoid conflicts with previous string-only data
 const STORAGE_KEY = 'toolsuite_kanban_v2';
-const lists = ['todo', 'progress', 'done'];
 
-let boardData = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+const lists = [
+    'todo',
+    'progress',
+    'done'
+];
+
+
+let boardData = JSON.parse(
+    localStorage.getItem(STORAGE_KEY)
+) || {
+
     todo: [],
     progress: [],
     done: []
+
 };
 
-// 2. INITIAL RENDER & DRAG-DROP SETUP
+
+
+
+
+// ----------------------------
+// INITIAL LOAD
+// ----------------------------
+
+
 lists.forEach(listId => {
-    const el = document.getElementById(listId);
-    
-    // Render existing data
+
+
+    const container =
+        document.getElementById(listId);
+
+
+
     boardData[listId].forEach(item => {
-        el.appendChild(createCard(item.text, item.label));
+
+
+        container.appendChild(
+
+            createCard(
+                item.text,
+                item.label
+            )
+
+        );
+
+
     });
 
-    // Initialize SortableJS
-    new Sortable(el, {
-        group: 'kanban_group',
-        animation: 150,
-        ghostClass: 'ghost-card',
-        onEnd: saveBoardState // Save on every reorder or move
-    });
+
+
+    new Sortable(
+        container,
+        {
+
+            group: 'kanban_group',
+
+            animation: 150,
+
+            ghostClass: 'ghost-card',
+
+            onEnd: saveBoardState
+
+        }
+
+    );
+
 });
 
-// 3. CORE UI LOGIC
+
+
+
+
+
+
+
+
+// ----------------------------
+// SAFE CARD CREATION
+// ----------------------------
+
+
 function createCard(text, label) {
-    const card = document.createElement('div');
-    card.className = 'task-card';
-    card.innerHTML = `
-        <div class="label label-${label}">${label}</div>
-        <div class="task-text">${text}</div>
-        <span class="delete-btn" onclick="deleteTask(this)">×</span>
-    `;
+
+
+    const card =
+        document.createElement('div');
+
+
+    card.className =
+        "task-card";
+
+
+
+
+
+    const labelDiv =
+        document.createElement('div');
+
+
+    labelDiv.className =
+        `label label-${label}`;
+
+
+    labelDiv.textContent =
+        label;
+
+
+
+
+
+    const textDiv =
+        document.createElement('div');
+
+
+    textDiv.className =
+        "task-text";
+
+
+    // IMPORTANT SECURITY FIX
+    textDiv.textContent =
+        text;
+
+
+
+
+
+
+
+    const deleteBtn =
+        document.createElement('span');
+
+
+    deleteBtn.className =
+        "delete-btn";
+
+
+    deleteBtn.textContent =
+        "×";
+
+
+
+
+    deleteBtn.addEventListener(
+        "click",
+        () => {
+
+
+            if (confirm(
+                "Delete this task permanently?"
+            )) {
+
+
+                card.remove();
+
+
+                saveBoardState();
+
+
+            }
+
+
+        }
+
+    );
+
+
+
+
+
+    card.appendChild(labelDiv);
+
+    card.appendChild(textDiv);
+
+    card.appendChild(deleteBtn);
+
+
+
+
+
     return card;
+
+
 }
 
-window.addNewTask = function(listId) {
-    const labelSelect = document.getElementById(`${listId}-label`);
-    const label = labelSelect.value;
-    const taskText = prompt("Enter task description:");
 
-    if (taskText && taskText.trim() !== "") {
-        const container = document.getElementById(listId);
-        container.appendChild(createCard(taskText, label));
+
+
+
+
+
+
+
+// ----------------------------
+// ADD TASK
+// ----------------------------
+
+
+window.addNewTask = function (listId) {
+
+
+    const labelSelect =
+        document.getElementById(
+            `${listId}-label`
+        );
+
+
+
+    const label =
+        labelSelect.value;
+
+
+
+    const taskText =
+        prompt(
+            "Enter task description:"
+        );
+
+
+
+
+    if (
+        taskText &&
+        taskText.trim() != ""
+    ) {
+
+
+        const container =
+            document.getElementById(listId);
+
+
+
+        container.appendChild(
+
+            createCard(
+                taskText.trim(),
+                label
+            )
+
+        );
+
+
+
         saveBoardState();
-        
-        // Reset label selector
-        labelSelect.value = 'none';
+
+
+
+        labelSelect.value =
+            "none";
+
+
     }
+
+
 };
 
-window.deleteTask = function(btn) {
-    if (confirm("Delete this task permanently?")) {
-        btn.parentElement.remove();
-        saveBoardState();
-    }
-};
 
-// 4. PERSISTENCE LOGIC
+
+
+
+
+
+
+
+// ----------------------------
+// SAVE STATE
+// ----------------------------
+
+
 function saveBoardState() {
+
+
     const newState = {};
-    
+
+
+
     lists.forEach(listId => {
-        const listEl = document.getElementById(listId);
-        const cards = Array.from(listEl.querySelectorAll('.task-card'));
-        
-        newState[listId] = cards.map(card => {
-            return {
-                text: card.querySelector('.task-text').innerText,
-                label: card.querySelector('.label').innerText.toLowerCase()
-            };
-        });
+
+
+        const cards =
+            document.querySelectorAll(
+                `#${listId} .task-card`
+            );
+
+
+
+        newState[listId] =
+            Array.from(cards)
+                .map(card => {
+
+
+                    return {
+
+
+                        text:
+                            card.querySelector(
+                                ".task-text"
+                            )
+                                .textContent,
+
+
+
+                        label:
+                            card.querySelector(
+                                ".label"
+                            )
+                                .textContent
+                                .toLowerCase()
+
+
+                    };
+
+
+                });
+
+
     });
 
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(newState));
+
+
+
+    localStorage.setItem(
+
+        STORAGE_KEY,
+
+        JSON.stringify(newState)
+
+    );
+
+
 }

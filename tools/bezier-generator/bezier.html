@@ -4,15 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cubic Bezier Generator</title>
+    <meta property="og:title" content="Cubic Bezier Generator - Project Toolsuite" />
+    <meta property="og:description" content="Design and visualize Bézier curves interactively for UI, graphics, and animation workflows." />
+    <meta property="og:image" content="https://cdn-icons-png.flaticon.com/512/3522/3522262.png" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Cubic Bezier Generator - Project Toolsuite" />
+    <meta name="twitter:description" content="Design and visualize Bézier curves interactively for UI, graphics, and animation workflows." />
     <style>
 
         /* CSS Variables for raw brutalist theme matching */
         :root {
-            --bg-color: #FFFFFF;
+            --bg-color: var(--bg);
             --text-color: var(--text);
-            --border-thick: 2px solid #000000;
-            --border-heavy: 5px solid #000000;
-            --border-dashed: 1px dashed #000000;
+            --border-thick: 2px solid var(--border);
+            --border-heavy: 5px solid var(--border);
+            --border-dashed: 1px dashed var(--border);
         }
 
         /* Basic Layout Resets */
@@ -36,6 +43,25 @@
             margin: 40px auto;
         }
 
+
+        .dark-mode-toggle {
+            margin-top: 12px;
+            padding: 8px 12px;
+            border: var(--border-thick);
+            background: var(--bg);
+            color: var(--text);
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            width: auto;
+        }
+
+        .dark-mode-toggle:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
         /* Heavy Anchor Header Underline styling */
         header {
             margin-bottom: 40px;
@@ -130,13 +156,14 @@
 
         button:hover {
             background-color: var(--text);
-            color: #FFFFFF;
+            color: var(--bg);
+            
         }
 
         /* Button Active / Inverted state */
         button.active {
             background-color: var(--text);
-            color: #FFFFFF;
+            color: var(--bg);
         }
         button.active:hover {
             background-color: var(--bg);
@@ -183,7 +210,7 @@
 
         input[type="number"]:focus {
             background-color: var(--text);
-            color: #FFFFFF;
+            color: var(--bg);
         }
 
         /* Custom Drag Slider Styling */
@@ -204,7 +231,7 @@
             -webkit-appearance: none;
             width: 100%;
             height: 8px;
-            background: #000000;
+            background: var(--text);
             outline: none;
             border: none;
             margin: 10px 0;
@@ -220,7 +247,7 @@
         }
 
         input[type="range"]::-webkit-slider-thumb:hover {
-            background: #000000;
+            background: var(--text);
         }
 
         /* Simulation Tracks System */
@@ -268,7 +295,7 @@
             width: 36px;
             height: 36px;
             background-color: var(--text);
-            color: #FFFFFF;
+            color: var(--bg);
             position: absolute;
             top: 0;
             left: 0;
@@ -310,7 +337,7 @@
 
         .output-box:hover {
             background-color: var(--text);
-            color: #FFFFFF;
+            color: var(--bg);
         }
 
         /* Preset Options List Grid */
@@ -351,7 +378,7 @@
 
         a:hover {
             background-color: var(--text);
-            color: #FFFFFF;
+            color: var(--bg);
         }
 
         footer {
@@ -930,5 +957,8 @@
             renderUpdates();
         };
     </script>
+    <footer>
+        <a href="../../index.html">&larr; Back to Home</a>
+    </footer>
 </body>
 </html>

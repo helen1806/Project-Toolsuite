@@ -12,11 +12,12 @@
       name="google-site-verification"
       content="rbMDsZDEnPXvV0H4Tf0EHHgfdPQy2doXIuO_JNCV9qM"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="./theme.css" />
     <style>
       body {
-        font-family: "Courier New", Courier, monospace;
-        background-color: var(--bg);
+        background: var(--bg);
         color: var(--text);
         line-height: 1.7;
         margin: 0;
@@ -30,74 +31,29 @@
         max-width: 1100px;
         margin: 0 auto;
         padding: 48px 28px;
-      }
-
-      header {
-        border-bottom: 5px solid var(--border);
-        padding-bottom: 28px;
-        margin-bottom: 60px;
-        position: relative;
-      }
-
-      h1 {
-        font-size: 2.6rem;
-        text-transform: uppercase;
-        margin: 0 0 12px;
-        letter-spacing: 0.08em;
-      }
-
-      .dark-mode-toggle {
-        position: absolute;
-        top: 0;
-        right: 0;
-        background: var(--text);
-        color: var(--bg);
-        border: 2px solid var(--border);
-        padding: 10px 24px;
-        font-family: inherit;
-        font-weight: 900;
-        cursor: pointer;
-        text-transform: uppercase;
-        box-shadow: 4px 4px 0px var(--border);
-        transition: transform 0.1s;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 8px;
-      }
-
-      .theme-option {
-        display: flex;
-        align-items: center;
-        gap: 6px;
-      }
-
-      .theme-option.hidden {
-        display: none !important;
-      }
-
-      .theme-icon {
-        width: 20px;
-        height: 20px;
-        display: inline-block;
-        vertical-align: middle;
-        stroke: white;
-        fill: none;
-      }
-
-      .dark-mode-toggle:active {
-        transform: translate(2px, 2px);
-        box-shadow: 2px 2px 0px var(--border);
+        background: var(--bg);
+        border-radius: 14px;
       }
 
       .principle-box {
         border: 3px solid var(--border);
         padding: 32px;
         margin-bottom: 50px;
-        background: var(--tag-bg);
+        border-radius: 14px;
+        box-shadow: 0 4px 14px var(--shadow);
         width: 100%;
         max-width: none;
         box-sizing: border-box;
+        transition:
+            transform 0.25s ease,
+            box-shadow 0.25s ease,
+            background 0.25s ease;
+      }
+
+      .principle-box:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 24px var(--shadow);
+        background: var(--surface-2);
       }
 
       .principle-box h2 {
@@ -121,14 +77,32 @@
 
       .mini-cta {
         border: 2px solid var(--border);
-        background: var(--tag-bg);
-        padding: 16px 20px;
 
+        padding: 16px 20px;
+        background: var(--surface-2);
+        border-radius: 12px;
+        box-shadow: 0 4px 12px var(--shadow);
         display: flex;
         justify-content: space-between;
         align-items: center;
         gap: 20px;
         flex-wrap: wrap;
+      }
+
+      .mini-cta {
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease,
+          background 0.25s ease;
+      }
+
+      .mini-cta:hover {
+        transform: translateY(-4px);
+
+        box-shadow:
+          0 10px 24px var(--shadow);
+
+        background: var(--surface);
       }
 
       .mini-cta span {
@@ -160,7 +134,7 @@
       }
       .workspace {
         display: grid;
-        grid-template-columns: 220px 1fr;
+        grid-template-columns: 220px 1fr 280px;
         gap: 40px;
       }
 
@@ -175,30 +149,48 @@
         list-style: none;
         padding: 0;
       }
+
       .tag-item {
         display: block;
         width: 100%;
         text-align: left;
-        background: var(--tag-bg);
+
+        background: var(--surface);
+
         border: 2px solid var(--border);
+        border-radius: 10px;
+
         color: var(--text);
+
         padding: 10px 15px;
         margin-bottom: 10px;
+
         font-family: inherit;
         font-weight: bold;
         text-transform: uppercase;
+
         cursor: pointer;
-        transition: all 0.2s;
+
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease,
+          background-color 0.2s ease;
       }
+
+      .tag-item:hover {
+        transform: translateY(-2px);
+
+        background: var(--surface-2);
+
+        box-shadow:
+          0 6px 14px var(--shadow);
+      }
+
       .tag-item.active {
         background: var(--text);
         color: var(--bg);
         box-shadow: 4px 4px 0 var(--border);
       }
-      .tag-item:hover {
-        transform: translateX(5px);
-      }
-
       #toolSearch {
         width: 100%;
         padding: 18px;
@@ -225,18 +217,41 @@
       }
 
       .tool-link {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          min-height: 52px;
-          padding: 14px 20px;
-          border: 3px solid var(--border);
-          text-decoration: none;
-          color: inherit;
-          font-weight: bold;
-          transition: all 0.2s;
-          background: var(--bg);
-       }
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        font-size: 0.95rem;
+        min-height: 52px;
+
+        padding: 14px 20px;
+
+        border: 3px solid var(--border);
+        border-radius: 12px;
+
+        text-decoration: none;
+        color: inherit;
+        font-weight: bold;
+
+        background: var(--surface);
+
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease,
+          background-color 0.25s ease,
+          border-color 0.25s ease;
+      }
+
+    .tool-link:hover {
+      transform: translateY(-5px);
+
+      background: var(--surface-2);
+
+      border-color: var(--card-hover);
+
+      box-shadow:
+        0 12px 24px var(--shadow);
+    }
+      
       .tool-tags {
         margin-top: 6px;
         display: flex;
@@ -266,6 +281,8 @@
         margin-top: 96px;
         padding: 48px 0;
         border-top: 2px solid var(--border);
+        background: var(--surface);
+        border-radius: 16px 16px 0 0;
         text-align: center;
       }
       .footer-links {
@@ -290,7 +307,7 @@
         .workspace {
           grid-template-columns: 1fr;
         }
-        aside {
+        .tag-list {
           display: flex;
           overflow-x: auto;
           gap: 10px;
@@ -337,7 +354,7 @@
         .principle-box {
           border: 2px solid var(--border);
           padding: 28px 40px;
-          background: var(--tag-bg);
+          background: var(--surface);
           max-width: 950px;
           margin-bottom: 40px;
           margin: 0 auto 40px;
@@ -381,11 +398,13 @@
           gap: 20px;
         }
 
-        aside,
         .tag-list {
           display: flex;
           flex-wrap: wrap;
           gap: 8px;
+        }
+        .tool-link {
+          padding: 14px 20px;
         }
 
         aside {
@@ -410,14 +429,14 @@
           gap: 15px;
         }
 
-        .tool-link {
-          padding: 16px;
-          font-size: 0.95rem;
-        }
-
         footer {
           margin-top: 60px;
           padding: 30px 0;
+          background: var(--surface-2);
+
+          border-radius: 14px 14px 0 0;
+
+          padding-inline: 20px;
         }
 
         .footer-links {
@@ -540,29 +559,6 @@
           gap: 10px;
         }
 
-        .tool-link {
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          min-height: 52px;
-          padding: 14px 20px;
-          border: 3px solid var(--border);
-          text-decoration: none;
-          color: inherit;
-          font-weight: bold;
-          transition: all 0.2s;
-          background: var(--bg);
-       }
-      .tool-link small {
-        display: block;
-        font-size: 0.8rem;
-        opacity: 0.7;
-       }
-
-        .tool-link:hover {
-          transform: translate(-2px, 2px);
-          box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
-        }
 
         footer {
           margin-top: 40px;
@@ -597,6 +593,11 @@
     ></script>
   </head>
   <body>
+    <!-- Loading Spinner Overlay -->
+<div id="loadingOverlay" class="loading-overlay" style="display: none;">
+  <div class="spinner"></div>
+  <p>Loading tool...</p>
+</div>
     <div class="container">
       <header>
         <h1>Project Toolsuite</h1>
@@ -711,6 +712,13 @@
             <!-- Tools will be injected here -->
           </div>
         </main>
+
+        <aside class="-sidebar" id="Sidebar">
+          <h3>Recent Tools</h3>
+          <div id="recent-tools-list">
+            <p class="recent-placeholder">No recent tools yet</p>
+        </div>
+        </aside>
       </div>
 
       <footer>
@@ -725,6 +733,21 @@
 
     <script>
       const tools = [
+        {
+          name: "CRON Schedule Explainer & Builder",
+          path: "tools/cron-explainer/cron.html",
+          tags: ["Dev", "Utilities", "Education"],
+        },
+        {
+          name: "API Request Builder (Postman Lite)",
+          path: "tools/api-client/api-client.html",
+          tags: ["Dev", "Utilities"],
+        },
+        {
+          name: "NGINX Configuration Generator",
+          path: "tools/nginx-generator/nginx-generator.html",
+          tags: ["Dev", "Utilities"],
+        },
         {
           name: "PDF ToolSuite",
           path: "tools/pdf merger/pdf-merger.html",
@@ -951,99 +974,128 @@
           path: "tools/cicd-visualizer/cicd-visualizer.html",
           tags: ["Dev", "Design"],
         },
+        {
+          name: "World-Time Companion",
+          path: "tools/world-time/world-time.html",
+          tags: ["world clock","time convertor", "age calculator", "developer tools"],
+        },
+        {
+          name: "IP Subnet Calculator",
+          path: "tools/ip-subnet-calculator/index.html",
+          tags: ["Dev", "Utilities"],
+        },
+        {
+          name: "RSA Encryption & Decryption",
+          path: "tools/rsa-encryption-decryption/rsa.html",
+          tags: ["Security", "Dev"],
+        },
+        {
+          name: "Unit Converter",
+          path: "tools/unit-converter/unit-converter.html",
+          tags: ["Utilities", "Maths"],
+        },
+        {
+          name: "GitHub Actions Generator",
+          path: "tools/github-actions-generator/github-actions-generator.html",
+          tags: ["Dev", "Utilities"],
+        },
+        {
+          name: "Kubernetes Manifest Generator",
+          path: "tools/kubernetes-manifest-generator/kubernetes-manifest-generator.html",
+          tags: ["Dev", "DevOps"],
+
+        },
       ];
 
       let activeTag = "all";
 
-      function renderTags() {
-        const tagBox = document.getElementById("tag-container");
-        const uniqueTags = [
-          "all",
-          ...new Set(tools.flatMap((t) => t.tags)),
-        ].sort((a, b) => {
-          if (a === "all") return -1;
-          if (b === "all") return 1;
-          return a.localeCompare(b);
-        });
+function renderTags() {
+  const tagBox = document.getElementById("tag-container");
+  const uniqueTags = [
+    "all",
+    ...new Set(tools.flatMap((t) => t.tags)),
+  ].sort((a, b) => {
+    if (a === "all") return -1;
+    if (b === "all") return 1;
+    return a.localeCompare(b);
+  });
 
-        tagBox.innerHTML = "";
-        uniqueTags.forEach((tag) => {
-          const btn = document.createElement("button");
-          btn.className = `tag-item ${activeTag === tag ? "active" : ""}`;
-          btn.textContent = tag === "all" ? "All Tools" : tag;
-          btn.onclick = () => {
-            activeTag = tag;
-            renderTags(); // Refresh tags to update active class
-            renderTools();
-          };
-          tagBox.appendChild(btn);
-        });
-      }
-
-      function renderTools() {
-        console.log("renderTools running");
-        const normalize = (str) =>
-          str.toLowerCase().replace(/\s+/g, "");
-        const query = normalize(document.getElementById("toolSearch").value);
-        const container = document.getElementById("tools-container");
-
-        const filtered = tools.filter((t) => {
-          const matchesSearch = normalize(t.name).includes(query);
-          const matchesTag =
-            activeTag === "all" || (t.tags && t.tags.includes(activeTag));
-          return matchesSearch && matchesTag;
-        });
-        document.getElementById("toolCount").textContent =
-          `${filtered.length} tool${filtered.length !== 1 ? "s" : ""} found`;
-
-        if (query) {
-          filtered.sort((a, b) => {
-            const aName = a.name.toLowerCase();
-            const bName = b.name.toLowerCase();
-
-            const aStarts = aName.startsWith(query);
-            const bStarts = bName.startsWith(query);
-            if (aStarts !== bStarts) return aStarts ? -1 : 1;
-
-            const aWord = aName.includes(" " + query);
-            const bWord = bName.includes(" " + query);
-            if (aWord !== bWord) return aWord ? -1 : 1;
-
-            const aIndex = aName.indexOf(query);
-            const bIndex = bName.indexOf(query);
-            if (aIndex !== bIndex) return aIndex - bIndex;
-
-            return aName.localeCompare(bName);
-          });
-        }
-
-    if (filtered.length === 0) {
-     container.innerHTML = `
-      <p style="grid-column: 1/-1; opacity: 0.5;">
-        No tools found matching your criteria.
-      </p>`;
-  return;
+  tagBox.innerHTML = "";
+  uniqueTags.forEach((tag) => {
+    const btn = document.createElement("button");
+    btn.className = "tag-item";
+    btn.classList.toggle("active", activeTag === tag);
+    btn.textContent = tag === "all" ? "All Tools" : tag;
+    btn.onclick = () => {
+      activeTag = tag;
+      renderTags();
+      renderTools();
+    };
+    tagBox.appendChild(btn);
+  });
 }
 
-container.innerHTML = filtered
-  .map(
-    (t) => `
+function renderTools() {
+  const rawQuery = document.getElementById("toolSearch").value.trim();
+  if (!rawQuery) {
+    activeTag = 'all';
+    renderTags();
+  }
+  const normalize = (str) => str.toLowerCase().replace(/\s+/g, "");
+  const query = normalize(document.getElementById("toolSearch").value);
+  const container = document.getElementById("tools-container");
+
+  const filtered = tools.filter((t) => {
+    const matchesSearch = normalize(t.name).includes(query);
+    const matchesTag = activeTag === "all" || (t.tags && t.tags.includes(activeTag));
+    return matchesSearch && matchesTag;
+  });
+
+  // Tool count updates immediately
+  const count = filtered.length;
+  document.getElementById("toolCount").textContent = count === 0 ? "0 tools found" : `${count} tool${count !== 1 ? "s" : ""} found`;
+
+  if (query) {
+    filtered.sort((a, b) => {
+      const aName = a.name.toLowerCase();
+      const bName = b.name.toLowerCase();
+      const aStarts = aName.startsWith(query);
+      const bStarts = bName.startsWith(query);
+      if (aStarts !== bStarts) return aStarts ? -1 : 1;
+      const aWord = aName.includes(" " + query);
+      const bWord = bName.includes(" " + query);
+      if (aWord !== bWord) return aWord ? -1 : 1;
+      const aIndex = aName.indexOf(query);
+      const bIndex = bName.indexOf(query);
+      if (aIndex !== bIndex) return aIndex - bIndex;
+      return aName.localeCompare(bName);
+    });
+  }
+
+  if (filtered.length === 0) {
+    container.innerHTML = `<p style="grid-column: 1/-1; opacity: 0.5;">No tools found matching your criteria.</p>`;
+    return;
+  }
+
+  container.innerHTML = filtered
+    .map(
+      (t) => `
       <a href="${t.path}" class="tool-link">
         <div>${t.name}</div>
         <div class="tool-tags">
           ${t.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
         </div>
       </a>
-    `,
-  )
-  .join("");
-  }
+    `
+    )
+    .join("");
+}
 
-      document.getElementById("toolSearch").oninput = renderTools;
+document.getElementById("toolSearch").oninput = renderTools;
 
-      // Initial Execution
-      renderTags();
-      renderTools();
+// Initial Execution
+renderTags();
+renderTools();
 
       let deferredPrompt;
       const installBtn = document.getElementById("installBtn");
@@ -1061,6 +1113,36 @@ container.innerHTML = filtered
           deferredPrompt = null;
         });
       });
+
+// Loading Spinner on tool navigation
+function initSpinner() {
+  const overlay = document.getElementById('loadingOverlay');
+  if (!overlay) return;
+
+  function showSpinner() {
+    overlay.style.display = 'flex';
+    setTimeout(() => {
+      if (overlay.style.display === 'flex') overlay.style.display = 'none';
+    }, 30000);
+  }
+
+  document.addEventListener('click', function(e) {
+    const toolLink = e.target.closest('.tool-link, .tool-card a, a[href*="tools/"]');
+    if (!toolLink) return;
+    // Only exclude tag filters and footer links – recent tools should also show spinner
+    if (toolLink.closest('.tag-list, .footer-links')) return;
+    let href = toolLink.getAttribute('href');
+    if (href && !href.startsWith('#') && !href.startsWith('javascript:')) {
+      showSpinner();
+    }
+  });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initSpinner);
+} else {
+  initSpinner();
+}
     </script>
     <script src="./theme.js"></script>
   </body>

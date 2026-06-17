@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>World Time Companion - Project Toolsuite</title>
+
+    <meta name="description" content="Global timezone converter, world clocks, timestamp tools and date utilities">
+
+
+    <link rel="stylesheet" href="../../theme.css">
+
+    <link rel="stylesheet" href="world-time.css">
+
+
+    <script src="../../theme.js"></script>
+
+</head>
+
+
+<body>
+
+
+   <header>
+
+<div class="header-left">
+
+<button class="nav-btn"
+onclick="window.location.href='../../index.html'"> ← Back to Home
+
+</button>
+
+
+<h1>
+WORLD_TIME // COMPANION
+</h1>
+
+
+</div>
+
+
+
+<div class="header-buttons">
+
+<button class="action-btn"
+onclick="toggleTheme()">
+
+DARK / LIGHT THEME
+
+</button>
+
+
+</div>
+
+
+</header>
+
+
+
+
+    <main>
+
+
+
+        <section class="hero">
+
+
+            <div>
+
+
+                <h2>
+                    Your Global Time Companion
+                </h2>
+
+
+                <p>
+                    Convert time zones, compare cities, generate timestamps and plan meetings worldwide.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="globe-box">
+
+
+                <div class="globe">
+
+                    🌍
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+
+
+        <section class="tabs">
+
+
+            <button class="tab active" onclick="openTab('clock',this)">
+
+                World Clock
+
+            </button>
+
+
+            <button class="tab" onclick="openTab('converter', this)">
+
+                Timezone Converter
+
+            </button>
+
+
+
+            <button class="tab" onclick="openTab('date', this)">
+
+                Date Utilities
+
+            </button>
+
+
+
+            <button class="tab" onclick="openTab('developer', this)">
+
+                Developer Tools
+
+            </button>
+
+
+
+        </section>
+
+
+
+
+
+
+
+        <!-- WORLD CLOCK -->
+
+
+        <section id="clock" class="tool-section active">
+
+
+            <div class="section-title">
+
+
+                <h3>
+                    Live World Clocks
+                </h3>
+
+
+                <p>
+                    Search any city and view its current local time.
+                </p>
+
+
+            </div>
+
+
+
+            <input id="citySearch" class="search-box" placeholder="Search city...">
+
+
+            <div id="clockGrid" class="clock-grid">
+
+            </div>
+
+
+        </section>
+
+
+
+
+
+
+
+        <!-- CONVERTER -->
+
+
+       <!-- TIMEZONE CONVERTER -->
+
+<section id="converter" class="tool-section">
+
+
+    <div class="section-title">
+
+        <h3>
+            Timezone Converter
+        </h3>
+
+
+        <p>
+            Convert any date and time between countries.
+            Automatically handles daylight saving changes.
+        </p>
+
+    </div>
+
+
+
+
+    <div class="converter-box">
+
+
+
+        <div class="input-grid">
+
+
+
+            <div class="input-group">
+
+
+                <label>
+                    Select Date
+                </label>
+
+
+                <input 
+                type="date" 
+                id="convertDate">
+
+
+            </div>
+
+
+
+
+
+            <div class="input-group">
+
+
+                <label>
+                    Select Time
+                </label>
+
+
+                <input 
+                type="time" 
+                id="convertTime">
+
+
+            </div>
+
+
+
+
+
+            <div class="input-group">
+
+
+                <label>
+                    From Time Zone
+                </label>
+
+
+                <select id="fromZone">
+
+
+                </select>
+
+
+            </div>
+
+
+
+
+
+            <div class="input-group">
+
+
+                <label>
+                    To Time Zone
+                </label>
+
+
+                <select id="toZone">
+
+
+                </select>
+
+
+            </div>
+
+
+
+
+        </div>
+
+
+
+
+
+        <button 
+        class="action-btn convert-btn"
+        onclick="convertTimezone()">
+
+
+            CONVERT TIME
+
+
+        </button>
+
+
+
+
+        <div 
+        id="conversionResult"
+        class="result-box">
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+        <!-- DATE UTILITIES -->
+<section id="date" class="tool-section">
+
+
+    <div class="section-title">
+
+
+        <h3>
+            Date Utilities
+        </h3>
+
+
+        <p>
+            Calculate your age here...
+        </p>
+
+
+    </div>
+
+
+
+
+    <div class="form-grid">
+
+
+
+        <div class="input-group">
+
+
+            <label>
+                Birth Date
+            </label>
+
+
+            <input 
+            type="date" 
+            id="birthDate">
+
+
+        </div>
+
+
+
+    </div>
+
+
+
+
+
+    <button 
+    class="action-btn"
+    onclick="calculateAge()">
+
+
+        CALCULATE AGE
+
+
+    </button>
+
+
+
+
+
+    <div id="ageResult" class="result-box">
+
+    </div>
+
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+        <!-- DEVELOPER -->
+
+
+        <section id="developer" class="tool-section">
+
+
+            <div class="section-title">
+
+                <h3>
+                    Developer & Date Utilities
+                </h3>
+
+
+                <p>
+                    Useful tools for programmers working with dates.
+                </p>
+
+
+            </div>
+
+
+
+            <div class="dev-grid">
+
+
+                <button onclick="unixNow()">
+
+                    Current Unix Timestamp
+
+                </button>
+
+
+                <button onclick="isoNow()">
+
+                    ISO 8601 Time
+
+                </button>
+
+
+
+                <button onclick="utcNow()">
+
+                    UTC Time
+
+                </button>
+
+
+
+            </div>
+
+
+
+            <div id="devResult" class="result-box">
+
+            </div>
+
+
+        </section>
+
+
+
+
+    </main>
+
+
+
+
+    <script src="world-time.js"></script>
+
+
+</body>
+
+
+</html>
