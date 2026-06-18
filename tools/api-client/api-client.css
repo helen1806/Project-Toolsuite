@@ -431,3 +431,25 @@ footer a:hover {
         width: 100%;
     }
 }
+.back-home {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+
+    color: var(--text);
+    text-decoration: none;
+
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    padding: 8px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    transition: 0.2s ease;
+}
+
+.back-home:hover {
+    background: var(--card);
+    transform: translateX(-3px);
+}
