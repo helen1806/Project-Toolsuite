@@ -158,22 +158,22 @@ See the `LICENSE` file for complete details.
 
 | Rank | Contributor | Points | Commits |
 |-----:|------------|-------:|--------:|
-| 1 | @Winter262005 | 263 | 263 |
+| 1 | @Winter262005 | 266 | 266 |
 | 2 | @VITianYash42 | 20 | 20 |
 | 3 | @rach-kanc | 14 | 14 |
 | 4 | @Dru-429 | 13 | 13 |
-| 5 | @AdityaMittal08 | 9 | 9 |
-| 6 | @Ishwarpatra | 9 | 9 |
-| 7 | @love25-codes | 9 | 9 |
+| 5 | @Ishwarpatra | 10 | 10 |
+| 6 | @love25-codes | 10 | 10 |
+| 7 | @AdityaMittal08 | 9 | 9 |
 | 8 | @adikulkarni006 | 8 | 8 |
 | 9 | @ritiktyagiai | 8 | 8 |
-| 10 | @aditijha509 | 6 | 6 |
-| 11 | @JaiHarsan | 5 | 5 |
-| 12 | @ShrutiiShinde05 | 5 | 5 |
-| 13 | @SamXop123 | 4 | 4 |
-| 14 | @KaustAbhinand | 3 | 3 |
-| 15 | @Pranavkale11 | 3 | 3 |
-| 16 | @Sargam-Ghagre | 3 | 3 |
+| 10 | @Sargam-Ghagre | 7 | 7 |
+| 11 | @aditijha509 | 6 | 6 |
+| 12 | @JaiHarsan | 5 | 5 |
+| 13 | @ShrutiiShinde05 | 5 | 5 |
+| 14 | @SamXop123 | 4 | 4 |
+| 15 | @KaustAbhinand | 3 | 3 |
+| 16 | @Pranavkale11 | 3 | 3 |
 | 17 | @ShaikhWarsi | 3 | 3 |
 | 18 | @SuyashSoni10 | 3 | 3 |
 | 19 | @Aharshi3614 | 2 | 2 |

@@ -31,56 +31,210 @@ function padZero(num) {
 }
 
 // Core Parser of a single field
+// Core Parser of a single field
 function parseField(expr, minVal, maxVal, nameMap = null) {
+
     const values = new Set();
+
     const parts = expr.split(',');
 
     for (let part of parts) {
+
         part = part.trim().toLowerCase();
+
         if (!part) return null;
 
-        // Apply string substitutions if nameMap is provided
+
+        // Convert names first
         if (nameMap) {
+
             for (let [key, val] of Object.entries(nameMap)) {
-                part = part.replace(new RegExp(key, 'g'), val);
+
+                const regex = new RegExp(`\\b${key}\\b`, "gi");
+
+                part = part.replace(regex, val);
+
             }
+
         }
+
+
+        /*
+            STRICT VALIDATION
+
+            Allowed:
+            *
+            numbers
+            -
+            /
+            ,
+
+            Reject:
+            abc
+            12abc
+            1x2
+            @
+        */
+
+        if (!/^[0-9*/,\-]+$/.test(part)) {
+            return null;
+        }
+
 
         let step = 1;
+
         let start = minVal;
+
         let end = maxVal;
+
+
         let hasSlash = false;
 
+
+
+        // Handle step
         if (part.includes('/')) {
+
+
             hasSlash = true;
+
+
             const slashParts = part.split('/');
-            if (slashParts.length !== 2) return null;
-            step = parseInt(slashParts[1], 10);
-            if (isNaN(step) || step <= 0) return null;
+
+
+            if (slashParts.length !== 2) {
+                return null;
+            }
+
+
+            step = Number(slashParts[1]);
+
+
+            if (!Number.isInteger(step) || step <= 0) {
+                return null;
+            }
+
+
             part = slashParts[0];
+
         }
+
+
+
+        // Wildcard
 
         if (part === '*') {
+
+
             start = minVal;
+
             end = maxVal;
-        } else if (part.includes('-')) {
-            const dashParts = part.split('-');
-            if (dashParts.length !== 2) return null;
-            start = parseInt(dashParts[0], 10);
-            end = parseInt(dashParts[1], 10);
-            if (isNaN(start) || isNaN(end) || start < minVal || end > maxVal || start > end) return null;
-        } else {
-            const val = parseInt(part, 10);
-            if (isNaN(val) || val < minVal || val > maxVal) return null;
-            start = val;
-            end = hasSlash ? maxVal : val;
+
+
         }
 
-        for (let i = start; i <= end; i += step) {
-            values.add(i);
+
+
+        // Range
+
+        // Range
+
+        else if (part.includes('-')) {
+
+
+            const dashParts = part.split('-');
+
+
+            if (dashParts.length !== 2) {
+                return null;
+            }
+
+
+            start = Number(dashParts[0]);
+
+            end = Number(dashParts[1]);
+
+
+            if (
+                !Number.isInteger(start) ||
+                !Number.isInteger(end) ||
+                start < minVal ||
+                end > maxVal
+            ) {
+                return null;
+            }
+
+
+            // Handle wrap-around weekday ranges
+            // Example:
+            // sat-sun => 6-0 => 6,7,0
+
+            if (start > end && maxVal === 7) {
+
+                for (let i = start; i <= maxVal; i += step) {
+                    values.add(i);
+                }
+
+
+                for (let i = minVal; i <= end; i += step) {
+                    values.add(i);
+                }
+
+
+                continue;
+
+            }
+
+
+            if (start > end) {
+                return null;
+            }
+
         }
+
+
+        // Single value
+
+        else {
+
+
+            const val = Number(part);
+
+
+            if (
+                !Number.isInteger(val) ||
+                val < minVal ||
+                val > maxVal
+            ) {
+
+                return null;
+
+            }
+
+
+            start = val;
+
+            end = hasSlash ? maxVal : val;
+
+        }
+
+
+
+        for (
+            let i = start;
+            i <= end;
+            i += step
+        ) {
+
+            values.add(i);
+
+        }
+
     }
+
+
     return values;
+
 }
 
 // Generate the English description of a single field
@@ -92,7 +246,11 @@ function describeField(expr, unitName, minVal, maxVal, nameMap = null, listNames
     const parts = expr.split(',');
     const descriptions = parts.map(part => {
         part = part.trim().toLowerCase();
-        
+
+        if (!/^[0-9*/,\-]+$/.test(part) && !nameMap) {
+            return "";
+        }
+
         if (nameMap) {
             for (let [key, val] of Object.entries(nameMap)) {
                 part = part.replace(new RegExp(key, 'g'), val);
@@ -359,31 +517,31 @@ function populateSelects() {
             el.appendChild(opt);
         }
     };
-    
+
     // Minutes
     fillSelect("minuteStepStart", 0, 59, padZero);
     fillSelect("minuteStepValue", 1, 59);
     fillSelect("minuteRangeStart", 0, 59, padZero);
     fillSelect("minuteRangeEnd", 0, 59, padZero);
-    
+
     // Hours
     fillSelect("hourStepStart", 0, 23, padZero);
     fillSelect("hourStepValue", 1, 23);
     fillSelect("hourRangeStart", 0, 23, padZero);
     fillSelect("hourRangeEnd", 0, 23, padZero);
-    
+
     // DOM
     fillSelect("domStepStart", 1, 31);
     fillSelect("domStepValue", 1, 31);
     fillSelect("domRangeStart", 1, 31);
     fillSelect("domRangeEnd", 1, 31);
-    
+
     // Months
-    fillSelect("monthStepStart", 1, 12, x => MONTH_NAMES[x-1]);
+    fillSelect("monthStepStart", 1, 12, x => MONTH_NAMES[x - 1]);
     fillSelect("monthStepValue", 1, 12);
-    fillSelect("monthRangeStart", 1, 12, x => MONTH_NAMES[x-1]);
-    fillSelect("monthRangeEnd", 1, 12, x => MONTH_NAMES[x-1]);
-    
+    fillSelect("monthRangeStart", 1, 12, x => MONTH_NAMES[x - 1]);
+    fillSelect("monthRangeEnd", 1, 12, x => MONTH_NAMES[x - 1]);
+
     // DOW
     fillSelect("dowStepStart", 0, 6, x => WEEKDAY_NAMES[x]);
     fillSelect("dowStepValue", 1, 6);
@@ -395,14 +553,14 @@ function populateSelects() {
 document.addEventListener("DOMContentLoaded", () => {
     const cronInput = document.getElementById("cronInput");
     const statusPanel = document.getElementById("statusPanel");
-    
+
     // Field badges value cells
     const valMin = document.getElementById("valMin");
     const valHour = document.getElementById("valHour");
     const valDom = document.getElementById("valDom");
     const valMonth = document.getElementById("valMonth");
     const valDow = document.getElementById("valDow");
-    
+
     const nextExecutionsContainer = document.getElementById("nextExecutions");
 
     // Populate dropdown selectors and grids
@@ -457,12 +615,12 @@ function initGrids() {
 function createCheckboxItem(prefix, value, label) {
     const wrapper = document.createElement("label");
     wrapper.className = "checkbox-item";
-    
+
     const input = document.createElement("input");
     input.type = "checkbox";
     input.name = `${prefix}_val`;
     input.value = value;
-    
+
     input.addEventListener("change", () => {
         if (input.checked) {
             wrapper.classList.add("checked");
@@ -504,10 +662,10 @@ function setupBuilderChangeListeners() {
                 // If a subfield setting changes, make sure the matching radio gets checked
                 const tabId = ctrl.closest(".tab-content").id;
                 const fieldPrefix = tabId.replace("tab-", "");
-                
+
                 // Determine which radio group we are in
                 const modeRadios = document.getElementsByName(`${fieldPrefix}_mode`);
-                
+
                 // If user changes a dropdown, auto-select the corresponding radio mode
                 if (ctrl.id.includes("Step")) {
                     document.getElementById(`${fieldPrefix}ModeStep`).checked = true;
@@ -607,7 +765,7 @@ function syncBuilderToInput() {
             return `${start}-${end}`;
         } else if (mode === "specific") {
             const checked = Array.from(document.querySelectorAll(`input[name="${field}_val"]:checked`))
-                                 .map(chk => chk.value);
+                .map(chk => chk.value);
             if (checked.length === 0) return "*"; // fallback
             return checked.join(",");
         }
@@ -646,7 +804,7 @@ function updateAnalysis(cronStr) {
     if (analysis.isValid) {
         statusPanel.className = "status-panel success";
         statusPanel.innerHTML = `<strong>Description:</strong> ${analysis.description}`;
-        
+
         // Update detail badges
         valMin.textContent = analysis.fields.minute;
         valHour.textContent = analysis.fields.hour;
@@ -657,19 +815,19 @@ function updateAnalysis(cronStr) {
         // Calculate next dates
         const dates = getNextExecutions(cronStr, 5);
         nextExecutionsContainer.innerHTML = "";
-        
+
         if (dates.length > 0) {
             dates.forEach((date, index) => {
                 const li = document.createElement("li");
                 li.className = "execution-item";
-                
+
                 const idx = document.createElement("div");
                 idx.className = "execution-index";
                 idx.textContent = index + 1;
-                
+
                 const timeStr = document.createElement("div");
                 timeStr.className = "execution-time";
-                
+
                 // Format details
                 const y = date.getFullYear();
                 const m = MONTH_NAMES[date.getMonth()];
@@ -677,9 +835,9 @@ function updateAnalysis(cronStr) {
                 const dayName = WEEKDAY_NAMES[date.getDay()];
                 const hh = padZero(date.getHours());
                 const mm = padZero(date.getMinutes());
-                
+
                 timeStr.textContent = `${dayName}, ${m} ${d}, ${y} @ ${hh}:${mm}`;
-                
+
                 li.appendChild(idx);
                 li.appendChild(timeStr);
                 nextExecutionsContainer.appendChild(li);
@@ -690,7 +848,7 @@ function updateAnalysis(cronStr) {
     } else {
         statusPanel.className = "status-panel error";
         statusPanel.innerHTML = `<strong>Syntax Error:</strong> ${analysis.error}`;
-        
+
         // Reset field badges
         valMin.textContent = "-";
         valHour.textContent = "-";

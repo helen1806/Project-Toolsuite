@@ -3,7 +3,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const methodSelect = document.getElementById("methodSelect");
     const sendBtn = document.getElementById("sendBtn");
-    
+
     // Tab bindings
     setupTabs("reqTabGroup", "reqTabContent");
     setupTabs("resTabGroup", "resTabContent");
@@ -11,9 +11,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // Dynamic headers logic
     const addHeaderBtn = document.getElementById("addHeaderBtn");
     const headersContainer = document.getElementById("headersContainer");
-    
+
     addHeaderBtn.addEventListener("click", () => addHeaderRow());
-    
+
     // Auto-populate Content-Type header on start
     addHeaderRow("Content-Type", "application/json");
 
@@ -28,33 +28,33 @@ document.addEventListener("DOMContentLoaded", () => {
 // Setup dynamic headers manager
 function addHeaderRow(name = "", value = "") {
     const container = document.getElementById("headersContainer");
-    
+
     const row = document.createElement("div");
     row.className = "header-row";
-    
+
     const keyInput = document.createElement("input");
     keyInput.type = "text";
     keyInput.placeholder = "Header-Name";
     keyInput.value = name;
     keyInput.className = "header-key";
-    
+
     const valInput = document.createElement("input");
     valInput.type = "text";
     valInput.placeholder = "Value";
     valInput.value = value;
     valInput.className = "header-val";
-    
+
     const delBtn = document.createElement("button");
     delBtn.className = "btn btn-danger";
     delBtn.type = "button";
     delBtn.textContent = "-";
     delBtn.title = "Remove Header";
     delBtn.onclick = () => row.remove();
-    
+
     row.appendChild(keyInput);
     row.appendChild(valInput);
     row.appendChild(delBtn);
-    
+
     container.appendChild(row);
 }
 
@@ -62,7 +62,7 @@ function addHeaderRow(name = "", value = "") {
 function handleMethodChange() {
     const method = document.getElementById("methodSelect").value;
     const bodyTab = document.getElementById("bodyTabHeader");
-    
+
     if (method === "GET" || method === "DELETE") {
         bodyTab.style.display = "none";
         // Ensure headers tab is active if body tab was active
@@ -88,13 +88,13 @@ function setupTabs(groupName, contentClassName) {
 function switchTab(groupName, contentClassName, targetId) {
     const tabLinks = document.querySelectorAll(`[data-group="${groupName}"]`);
     const contents = document.querySelectorAll(`.${contentClassName}`);
-    
+
     tabLinks.forEach(t => t.classList.remove("active"));
     contents.forEach(c => c.classList.remove("active"));
-    
+
     const activeLink = Array.from(tabLinks).find(link => link.dataset.tab === targetId);
     if (activeLink) activeLink.classList.add("active");
-    
+
     const activeContent = document.getElementById(targetId);
     if (activeContent) activeContent.classList.add("active");
 }
@@ -104,7 +104,7 @@ async function sendRequest() {
     const urlInput = document.getElementById("urlInput").value.trim();
     const method = document.getElementById("methodSelect").value;
     const sendBtn = document.getElementById("sendBtn");
-    
+
     // Clear outputs
     resetResponseConsole();
 
@@ -151,7 +151,7 @@ async function sendRequest() {
     sendBtn.textContent = "[ SENDING... ]";
 
     const startTime = performance.now();
-    
+
     try {
         const options = {
             method: method,
@@ -188,7 +188,7 @@ async function sendRequest() {
 
         displayResponseBody(bodyText);
         displayResponseSize(sizeInBytes);
-        
+
         // Auto-switch response tab to body view on success
         switchTab("resTabGroup", "resTabContent", "tab-res-body");
 
@@ -229,7 +229,7 @@ function resetResponseConsole() {
 function displayResponseStatus(code, text) {
     const badge = document.getElementById("resStatus");
     badge.textContent = `${code} ${text}`;
-    
+
     badge.className = "status-indicator";
     if (code >= 200 && code < 300) {
         badge.classList.add("status-success");
@@ -257,7 +257,7 @@ function displayResponseSize(bytes) {
 function displayResponseHeaders(headers) {
     const list = document.getElementById("resHeadersList");
     list.innerHTML = "";
-    
+
     let hasHeaders = false;
     headers.forEach((val, key) => {
         hasHeaders = true;
@@ -295,6 +295,20 @@ function copyResponse() {
 function clearConsole() {
     document.getElementById("urlInput").value = "";
     document.getElementById("reqBody").value = "";
+
+    // Reset custom headers
+    const headersContainer = document.getElementById("headersContainer");
+
+    if (headersContainer) {
+        headersContainer.innerHTML = "";
+
+        // Restore default Content-Type header
+        addHeaderRow("Content-Type", "application/json");
+    }
+
     resetResponseConsole();
-    if (typeof notify !== 'undefined') notify.info("Inputs and console cleared");
+
+    if (typeof notify !== 'undefined') {
+        notify.info("Inputs, headers and console cleared");
+    }
 }

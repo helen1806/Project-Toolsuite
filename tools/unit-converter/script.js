@@ -282,6 +282,22 @@ function initializeCategory(category) {
     toValueInput.value = '';
 }
 
+
+function getValidPrecision() {
+    const DEFAULT_PRECISION = 4;
+    const precision = Number.parseInt(precisionInput.value, 10);
+
+    if (
+        Number.isNaN(precision) ||
+        precision < 0 ||
+        precision > 20
+    ) {
+        return DEFAULT_PRECISION;
+    }
+
+    return precision;
+}
+
 // Conversion Logic
 function performConversion() {
     const fromValue = parseFloat(fromValueInput.value);
@@ -304,7 +320,7 @@ function performConversion() {
         result = baseValue / category.toBase[toUnitSelect.value];
     }
 
-    const precision = parseInt(precisionInput.value);
+    const precision = getValidPrecision();
     toValueInput.value = parseFloat(result.toFixed(precision));
 
     addToHistory(
