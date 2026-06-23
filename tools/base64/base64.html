@@ -71,10 +71,11 @@
         border: 2px solid var(--border);
         font-family: inherit;
         font-size: 1rem;
-        background: var(--bg);
         resize: vertical;
         min-height: 150px;
         transition: background-color 0.2s, border-color 0.2s;
+        background: var(--surface);
+        color: var(--text);
     }
 
     textarea:focus {
@@ -92,7 +93,7 @@
 
     button {
         font-family: inherit;
-        background-color: var(--bg);
+        background-color: var(--surface);
         color: var(--text);
         border: 2px solid var(--border);
         padding: 12px 20px;
@@ -105,7 +106,9 @@
     button:hover {
         background-color: var(--text);
         color: var(--bg);
+        box-shadow: 0 6px 14px var(--shadow);
     }
+
 
     button:active {
         transform: translateY(1px);

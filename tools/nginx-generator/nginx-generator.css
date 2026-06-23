@@ -1,25 +1,5 @@
 /* Neobrutalist styling for NGINX Configuration Generator */
 
-:root {
-    --bg: #ffffff;
-    --text: #000000;
-    --border: #000000;
-    --tag-bg: #f5f5f4;
-    --muted: #78716c;
-    --accent: #d6d3d1;
-    --success: #22c55e;
-}
-
-body.dark-mode {
-    --bg: #0f172a;
-    --text: #f8fafc;
-    --border: #60a5fa;
-    --tag-bg: #111827;
-    --muted: #94a3b8;
-    --accent: #1e293b;
-    --success: #4ade80;
-}
-
 * {
     box-sizing: border-box;
 }
@@ -53,27 +33,6 @@ header p {
     font-size: 1rem;
     color: var(--muted);
     margin: 0;
-}
-
-.dark-mode-toggle {
-    position: absolute;
-    top: 0;
-    right: 0;
-    background: var(--text);
-    color: var(--bg);
-    border: 2px solid var(--border);
-    padding: 10px 24px;
-    font-family: inherit;
-    font-weight: 900;
-    cursor: pointer;
-    text-transform: uppercase;
-    box-shadow: 4px 4px 0px var(--border);
-    transition: transform 0.1s;
-}
-
-.dark-mode-toggle:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px var(--border);
 }
 
 .nav-btn {
@@ -313,23 +272,26 @@ textarea.preview-area:focus {
 }
 
 footer {
-    border-top: 2px solid var(--border);
-    margin-top: 55px;
-    padding-top: 20px;
-    font-size: 0.95rem;
-}
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
 
-footer a {
-    color: var(--text);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--border);
-    padding-bottom: 2px;
-}
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
 
-footer a:hover {
-    background-color: var(--text);
-    color: var(--bg);
-}
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
 
 @media(max-width: 600px) {
     header h1 {

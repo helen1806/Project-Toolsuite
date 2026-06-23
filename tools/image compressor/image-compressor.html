@@ -99,8 +99,8 @@ button {
 }
 
 button:hover:enabled {
-    background: #000;
-    color: #fff;
+    background: var(--text);
+    color: var(--bg);
     transform: translateY(-1px);
 }
 
@@ -148,27 +148,37 @@ button:disabled {
     margin-bottom: 8px;
 }
 
-/*Footer*/
-hr {
-    border: none;
-    border-top: 1px solid var(--border);
-    margin: 40px 0 14px;
+#compressBtn{
+    background: var(--text);
+    color: var(--bg);
 }
 
-a {
-    color: var(--text);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--border);
-}
-
-a:hover {
-    background: #000;
-    color: #fff;
+#downloadBtn{
+    background: var(--text);
+    color: var(--bg);
 }
 
 footer {
-    font-size: 0.85rem;
-}
+             text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        footer a {
+            display: inline-block;
+            padding: 8px 12px;
+            border: 2px solid var(--border);
+            background: var(--bg);
+            color: var(--text);
+            text-decoration: none;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
 
 /*Mobile Fix*/
 @media (max-width: 600px) {

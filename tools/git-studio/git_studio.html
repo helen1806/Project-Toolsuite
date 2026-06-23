@@ -16,13 +16,10 @@
     <script src="https://unpkg.com/isomorphic-git@1.24.5"></script>
     <script src="https://unpkg.com/@isomorphic-git/lightning-fs"></script>
     <script src="https://unpkg.com/diff@5.1.0/dist/diff.min.js"></script>
-    
-    
     <link rel="stylesheet" href="../../assets/css/notifications.css">
     <script src="../../assets/js/notifications.js" defer></script>
     
     <style>
-
         /* Base Reset */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -34,7 +31,6 @@
 
         /* Layout */
         .container { display: flex; height: 100vh; }
-        
         /* Sidebar */
         .sidebar { width: 280px; background: var(--tag-bg); border-right: 4px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
         .sidebar-header { background: var(--tag-bg);color: var(--text); padding: 20px; border-bottom: 4px solid var(--border); }
@@ -50,6 +46,7 @@
         .header { background: var(--tag-bg);border-bottom: 4px solid var(--border); padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; }
         .btn { background: var(--bg); color: var(--text); border: 3px solid var(--border); padding: 10px 20px; font-family: inherit; font-weight: bold; cursor: pointer; box-shadow: 4px 4px 0 var(--border); transition: 0.1s; margin-right: 150px;}
         .btn:active { transform: translate(4px, 4px); box-shadow: none; }
+        .btn:hover{background: var(--bg); color: var(--text);}
 
         /* Workspace & Views */
         .workspace { flex: 1; display: flex; overflow: hidden; background: var(--bg); position: relative; }
@@ -157,9 +154,7 @@
         }
     
     </style>
-    
     <link rel="stylesheet" href="../../theme.css">
-    <script src="../../theme.js"></script>
 </head>
 <body>
     <div class="container">
@@ -275,5 +270,6 @@
     
     <div id="tooltip" class="tooltip"></div>
     <script src="studio_git.js"></script>
+     <script src="../../theme.js"></script>
 </body>
 </html>

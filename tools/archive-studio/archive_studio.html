@@ -89,14 +89,14 @@
             gap: 10px;
         }
         
-        .nav-item:hover { background: var(--tag-bg); color: var(--text); padding-left: 25px; }
+        .nav-item:hover { background: var(--surface); color: var(--text); padding-left: 25px; }
         .nav-item.active { background: var(--bg); color: var(--accent); border-right: 4px solid var(--accent); }
         
         .protocol-warning {
             margin: 20px;
             padding: 10px;
             border: 1px solid var(--border);
-            background: var(--tag-bg);
+            background: var(--surface);
             color: var(--text);
             font-size: 0.7rem;
             display: none;
@@ -121,25 +121,25 @@
         /* UPLOAD ZONES */
         .upload-zone {
             border: 2px dashed var(--border);
-            background: var(--tag-bg);
-            border-radius: 4px;
+            background: var(--surface);
             padding: 60px;
             text-align: center;
             cursor: pointer;
             transition: 0.2s;
             margin-bottom: 20px;
+            border-radius: 12px;
         }
 
         .upload-zone:hover,
         .upload-zone.dragover {
             border-color: var(--border);
-            background: var(--tag-bg);
+            background: var(--surface);
         }
 
         .upload-icon { font-size: 3rem; margin-bottom: 15px; display: block; }
 
         .upload-btn {
-            background: var(--tag-bg);
+            background: var(--surface);
             color: var(--text);
             border: 1px solid var(--border);
             padding: 10px 20px;
@@ -154,18 +154,22 @@
             color: var(--bg);
         }
 
+        .file-list,
+        .file-explorer {
+            border-radius: 12px;
+        }
         /* FILE EXPLORER (EXTRACTOR) */
         .file-explorer {
             display: none;
             flex: 1;
             flex-direction: column;
             border: 1px solid var(--border);
-            background: var(--tag-bg);
+            background: var(--surface);
         }
         
         .breadcrumb-bar {
             padding: 10px 15px;
-            background: var(--tag-bg);
+            background: var(--surface);
             border-bottom: 1px solid var(--border);
             display: flex;
             gap: 10px;
@@ -198,7 +202,7 @@
             font-size: 0.9rem;
         }
 
-        .tree-item:hover { background: var(--tag-bg); }
+        .tree-item:hover { background: var(--surface);}
 
         .tree-item.folder {
             color: var(--text);
@@ -218,7 +222,7 @@
         /* COMPRESSOR LIST */
         .file-list {
             border: 1px solid var(--border);
-            background: var(--tag-bg);
+            background: var(--surface);
             flex: 1;
             margin-bottom: 20px;
             overflow-y: auto;
@@ -233,7 +237,7 @@
             align-items: center;
         }
 
-        .list-row:hover { background: var(--tag-bg); }
+        .list-row:hover { background: var(--surface); }
 
         .remove-btn {
             color: var(--text);
@@ -252,7 +256,7 @@
         .action-btn {
             width: 100%;
             padding: 15px;
-            background: var(--tag-bg);
+            background: var(--surface);
             color: var(--text);
             border: 2px solid var(--border);
             font-weight: bold;
@@ -285,13 +289,13 @@
         .status-msg.success {
             border-color: var(--border);
             color: var(--text);
-            background: var(--tag-bg);
+            background: var(--surface);
         }
 
         .status-msg.error {
             border-color: var(--border);
             color: var(--text);
-            background: var(--tag-bg);
+            background: var(--surface);
         }
         
         .loading-overlay {
@@ -322,6 +326,37 @@
             100% { transform: rotate(360deg); }
         }
 
+        footer {
+            border-top: 2px solid var(--border);
+            padding: 20px;
+            text-align: center;
+            background: var(--surface);
+        }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--border);
+            padding: 8px 14px;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        @media (max-width: 768px) {
+            .app-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                border-right: none;
+                border-bottom: 2px solid var(--border);
+            }
+        }
     
     </style>
 </head>

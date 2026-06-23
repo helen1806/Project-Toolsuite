@@ -17,14 +17,6 @@
     <script src="../../assets/js/notifications.js" defer></script>
     <style>
 
-        :root {
-            --bg-color: #1e1e1e;
-            --panel-bg: #2d2d2d;
-            --text-color: #e0e0e0;
-            --accent-color: #007acc;
-            --handle-color: #ff4081;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
@@ -50,26 +42,8 @@
 
         h2 { margin-top: 0; font-size: 1.2rem; }
 
-        .dark-mode-toggle {
-            margin-top: 12px;
-            padding: 8px 12px;
-            border: 2px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        .dark-mode-toggle:hover {
-            background: var(--text);
-            color: var(--bg);
-        }
-
         .code-box {
             padding: 15px;
-            border-radius: 6px;
             font-family: monospace;
             word-break: break-all;
             position: relative;
@@ -86,7 +60,6 @@
 
         button {
             padding: 10px;
-            border-radius: 10px;
             border: 2px solid var(--border);
             background: var(--bg);
             color: var(--text);
@@ -95,8 +68,8 @@
 
         button:hover {
             transform: translateY(-2px);
-            background: var(--accent-color);
-            color: white;
+            background-color: var(--text);
+            color: var(--bg);
         }
 
         button.active {
@@ -154,30 +127,37 @@
         }
         input[type="file"] { font-size: 0.8rem; }
 
-        .footer-link {
+        footer {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            z-index: 100;
+            bottom: 16px;
+            left: 16px;
+            z-index: 1000;
         }
 
-        .footer-link a {
+        footer a {
+            display: inline-block;
+            padding: 8px 12px;
+            border: 2px solid var(--border);
+            background: var(--bg);
             color: var(--text);
             text-decoration: none;
-            border-bottom: 1px dotted var(--border);
-            padding: 8px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
         }
-            
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+                
     </style>
 </head>
 <body>
 
     <div class="sidebar">
         <h2>Clip-Path Generator</h2>
-
-        <button class="dark-mode-toggle" onclick="toggleTheme()" id="themeBtn">
-            DARK MODE
-        </button>
+         <button class="dark-mode-toggle" onclick="toggleTheme()" id="themeBtn">DARK MODE</button></header>
         <div>
             <label>Presets:</label>
             <div class="presets">
@@ -209,8 +189,8 @@
         <div class="demo-box" id="target-element">
             </div>
     </div>
-    <footer class="footer-link">
-        <a href="../../index.html">← Back to Home</a>
+    <footer>
+        <a href="../../index.html">&larr; Back to Home</a>
     </footer>
     <script src="clip-logic.js"></script>
 </body>

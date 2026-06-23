@@ -157,9 +157,27 @@
       }
 
       footer {
-        margin-top: var(--space-xl);
-        font-size: var(--text-sm);
-      }
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+      
 
       @media (max-width: 600px) {
         body {
@@ -170,12 +188,6 @@
         header {
           padding-right: 0;
           padding-top: 56px;
-        }
-
-        .dark-mode-toggle {
-          top: auto;
-          bottom: 100%;
-          margin-bottom: 8px;
         }
 
         h1 {

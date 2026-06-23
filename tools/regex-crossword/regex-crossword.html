@@ -13,16 +13,6 @@
     <meta name="twitter:description" content="Practice regular expressions through interactive crossword-style challenges." />
     <style>
 
-        :root {
-            --bg-color: #1e1e1e;
-            --panel-bg: #2d2d2d;
-            --text-color: #e0e0e0;
-            --accent-color: #00d2ff;
-            --valid-color: #4caf50;
-            --invalid-color: #f44336;
-            --hint-bg: #333;
-        }
-
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: var(--bg);
@@ -53,23 +43,6 @@
             position: relative;
             margin-bottom: 40px;
             text-align: center;
-        }
-
-        .dark-mode-toggle {
-            margin-top: 12px;
-            padding: 8px 12px;
-            border: 2px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        .dark-mode-toggle:hover {
-            background: var(--text);
-            color: var(--bg);
         }
 
         @media (max-width: 600px) {
@@ -159,20 +132,30 @@
         }
         .confetti { font-size: 3rem; margin-bottom: 10px; }
 
+        footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
         footer a {
-            color: var(--accent-color);
+            color: var(--text);
             text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
         }
 
         footer a:hover {
-            text-decoration: underline;
+            background: var(--text);
+            color: var(--bg);
         }
             
     </style>
     <link rel="stylesheet" href="../../theme.css">
-    <script src="../../theme.js"></script>
 </head>
 <body>
 
@@ -211,7 +194,7 @@
         <p>You matched all Regular Expressions.</p>
         <button onclick="nextLevel()">Next Level ➔</button>
     </div>
-    
     <script src="crossword-logic.js"></script>
+    <script src="../../theme.js"></script>
 </body>
 </html>

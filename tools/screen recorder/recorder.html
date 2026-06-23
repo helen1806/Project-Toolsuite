@@ -15,7 +15,6 @@
     <meta name="twitter:image" content="https://cdn-icons-png.flaticon.com/512/3522/3522262.png">
 
     <link rel="stylesheet" href="../../theme.css">
-    <script src="../../theme.js"></script>
     <link rel="stylesheet" href="../../assets/css/notifications.css">
     <script src="../../assets/js/notifications.js" defer></script>
     <style>
@@ -192,6 +191,28 @@
             margin: 0;
             opacity: 0.7;
         }
+
+        footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
     
     </style>
 </head>
@@ -247,8 +268,9 @@
         </div>
     </div>
     <footer>
-            <p><a href="../../index.html">← Back to Home</a></p>
+            <a href="../../index.html">← Back to Home</a>
         </footer>
     <script src="recorder.js"></script>
+    <script src="../../theme.js"></script>
 </body>
 </html>

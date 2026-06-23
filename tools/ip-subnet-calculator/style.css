@@ -1,10 +1,5 @@
 /* IP Subnet Calculator Specific Styles */
 
-:root {
-    --subnet-color: #22c55e;
-    --host-color: #3b82f6;
-    --card-bg: var(--bg);
-}
 
 body {
     font-family: 'Courier New', Courier, monospace;
@@ -205,6 +200,11 @@ input[type="number"]:focus {
     background: var(--text);
     color: var(--bg);
     border: 3px solid var(--border);
+    font-weight: 700;
+    text-transform: uppercase;
+    background: var(--bg);
+    color: var(--text);
+    border: 2px solid var(--border);
     cursor: pointer;
     text-transform: uppercase;
     box-shadow: 4px 4px 0px var(--border);
@@ -473,28 +473,32 @@ body.dark-mode .edge-case-card .card-title {
 }
 
 /* Footer link formatting */
-footer {
-    margin-top: 40px;
-    padding-top: 24px;
-    border-top: 3px solid var(--border);
-}
+        footer {
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+            margin-top: 40px;
+            padding-top: 24px;
+        }
 
-footer a {
-    color: var(--text);
-    text-decoration: none;
-    font-weight: bold;
-    text-transform: uppercase;
-    border: 2px solid var(--border);
-    padding: 8px 16px;
-    background: var(--tag-bg);
-    display: inline-block;
-    transition: transform 0.1s;
-}
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
 
-footer a:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 4px 4px 0px var(--border);
-}
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+
+        footer a:focus-visible {
+            outline: 2px solid var(--text);
+            outline-offset: 3px;
+        }
 
 /* Responsive adjustment */
 @media (max-width: 900px) {

@@ -143,8 +143,26 @@
 
         footer {
             margin-top: 60px;
-            font-size: 0.9rem;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
         }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+    
     </style>
 </head>
 
@@ -197,7 +215,7 @@
     </main>
 
         <footer>
-            <p><a href="../../index.html">← Back to Home</a></p>
+            <a href="../../index.html">← Back to Home</a>
         </footer>
 
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>

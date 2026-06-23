@@ -16,47 +16,39 @@
     <script src="../../assets/js/notifications.js" defer></script>
     <style>
 
-        :root {
-            --bg: #ffffff;
-            --text: #000000;
-            --border: var(--border);
-            --tag-bg: #f0f0f0;
-            --card-bg: #ffffff;
-            --hover: #e0e0e0;
-        }
-
-        body.dark-mode {
-            --bg: #1b1a1a;
-            --text: #f0f0f0;
-            --border: #f0f0f0;
-            --tag-bg: #333333;
-            --card-bg: #2a2a2a;
-            --hover: #444444;
-        }
-
         body {
             font-family: 'Courier New', Courier, monospace;
             background-color: var(--bg);
             color: var(--text);
             line-height: 1.6;
-            margin: 0;
+            margin: 40px auto;
             padding: 20px;
             transition: background-color 0.3s, color 0.3s;
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            min-height: 100vh;
             box-sizing: border-box;
-            overflow: hidden;
+            overflow-x: hidden;
+            max-width: 900px;
+            position: relative;
+            overflow-y: auto;
         }
 
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 100;
+        }
         header {
-            border-bottom: 5px solid var(--border);
-            padding-bottom: 15px;
-            margin-bottom: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-shrink: 0;
+            border-bottom: 5px solid var(--border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+            position: relative;
         }
 
         h1 { font-size: 2rem; text-transform: uppercase; margin: 0; }
@@ -258,13 +250,35 @@
         }
 
         .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 20px; }
+
+        footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            border-top: 2px solid var(--border);
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
     
     </style>
     <link rel="stylesheet" href="../../theme.css">
-    <script src="../../theme.js"></script>
 </head>
 <body>
-
+    <button class="dark-mode-toggle" onclick="toggleTheme()" id="themeBtn">DARK MODE</button></header>
     <header>
         <div>
             <h1>CI/CD Visualizer</h1>
@@ -274,7 +288,6 @@
             <button class="btn" onclick="addStage()">+ Add Stage</button>
             <button class="btn" onclick="exportYAML()">Export YAML</button>
             <button class="btn" onclick="clearPipeline()">Clear</button>
-            <button id="themeBtn" class="btn primary dark-mode-toggle" onclick="toggleTheme()">Dark Mode</button>
         </div>
     </header>
 
@@ -332,6 +345,7 @@
         <a href="../../index.html">&larr; Back to Home</a>
     </footer>
     <script src="cicd-visualizer.js"></script>
+    <script src="../../theme.js"></script>
     
 </body>
 </html>

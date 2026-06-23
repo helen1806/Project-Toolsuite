@@ -42,17 +42,11 @@
         .container {
             max-width: 900px;
             width: 100%;
-
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            border: 1px solid var(--border);
-
-            background: var(--bg);
+            background: var(--surface);
             border: 2px solid var(--border);
-
+            border-radius: 12px;
             padding: 24px;
+            box-shadow: 0 4px 12px var(--shadow);
         }
 
         .upload-area {
@@ -245,27 +239,15 @@
 
         }
 
-
-
-
         .back-home {
-
-
             color: var(--text);
-
             text-decoration: none;
-
-            font-weight: 600;
-
-            border: 2px solid var(--border);
-
-            padding: 10px 18px;
-
-            border-radius: 6px;
-
             transition: 0.3s;
-
-
+            border: 2px solid var(--border);
+            padding: 10px 18px;
+            background: var(--surface);
+            border-radius: 8px;
+            font-weight: bold;
         }
 
 
@@ -279,43 +261,7 @@
 
         }
 
-
-
-
-        .theme-toggle {
-
-
-            padding: 10px 18px;
-
-            border: 2px solid var(--border);
-
-            background: var(--tag-bg);
-
-            color: var(--text);
-
-            cursor: pointer;
-
-            border-radius: 6px;
-
-            font-weight: bold;
-
-            transition: 0.3s;
-
-
-        }
-
-
-
-        .theme-toggle:hover {
-
-
-            background: var(--text);
-
-            color: var(--bg);
-
-        }
-
-         .backtohome{
+        .backtohome{
             height:20vh;
             width:100%;
             display: flex;
@@ -326,9 +272,6 @@
             color: var(--text);
             margin-top: 10px;
             text-decoration: none;
-        }
-        a:hover{
-            text-decoration: underline dotted black;
         }
 
         footer {
@@ -413,13 +356,9 @@
             ← Back to Home
         </a>
 
-
-        <button class="theme-toggle" onclick="toggleTheme()">
-
-            🌙 TOGGLE THEME
-
-        </button>
-
+        <button class="dark-mode-toggle" onclick="toggleTheme()" id="themeBtn">
+                DARK MODE
+            </button>
 
     </div>
 

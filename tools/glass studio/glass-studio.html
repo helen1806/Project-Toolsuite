@@ -199,6 +199,20 @@ input[type="color"]:focus-visible {
     pointer-events: none; 
 }
 
+        a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
+
 /* GLASS CARD */
 .glass-card {
     width: min(440px, 92%);
@@ -312,9 +326,8 @@ input[type="color"]:focus-visible {
             <div id="codeOutput">/* CSS will appear here */</div>
         </div>
 
-        <a href="../../index.html"
-                style="color:var(--text); text-decoration:none; border-bottom:1px dotted var(--border); font-size:0.8rem;">
-            ← BACK TO HOME
+        <a href="../../index.html">
+            ← Back to Home
         </a>
     </div>
 </div>

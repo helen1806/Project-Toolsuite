@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Visual Code Diff Checker</title>
     <meta property="og:title" content="Visual Code Diff Checker - Project Toolsuite" />
-
+    <meta property="og:description"
+        content="Compare text and code differences instantly with a fast browser-based visual diff checker." />
+    <link rel="stylesheet" href="../../theme.css">
     <meta
     property="og:description"
     content="Compare text and code differences instantly with a fast browser-based visual diff checker."
@@ -169,14 +171,17 @@
             background-color: var(--text);
             color: var(--bg);
         }
-
-    
+        .secondary {
+            position: relative;
+            right: 20px;
+        }
+        .secondary:hover{
+            background-color: var(--text);
+            color: var(--bg);
+        }
     </style>
-    <link rel="stylesheet" href="../../theme.css">
-    <script src="../../theme.js"></script>
 </head>
 <body>
-
     <header>
         <h1>Visual Diff Checker</h1>
         <button class="secondary" onclick="clearAll()">Clear All</button>
@@ -205,5 +210,6 @@
         <a href="../../index.html">&larr; Back to Home</a>
     </footer>
     <script src="diff-logic.js"></script>
+    <script src="../../theme.js"></script>
 </body>
 </html>

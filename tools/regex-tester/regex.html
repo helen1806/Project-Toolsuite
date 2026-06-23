@@ -160,25 +160,41 @@
             background: var(--bg);
             color: var(--text);
         }
-
         /* Responsive */
         @media (max-width: 800px) {
             .workspace { grid-template-columns: 1fr; }
             aside { display: none; } /* Hide cheat sheet on small screens */
         }
-    
+
+        footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
     </style>
     <link rel="stylesheet" href="../../theme.css">
-    <script src="../../theme.js"></script>
 </head>
 <body>
 
 <header>
     <h1>Offline Regex Tester</h1>
     <p>Test Regular Expressions securely in your browser. Real-time matching.</p>
-
         <button class="dark-mode-toggle" onclick="toggleTheme()" id="themeBtn">DARK MODE</button></header>
-
 <div class="workspace">
     <main>
         <label class="label">Regular Expression</label>
@@ -191,9 +207,9 @@
 
         <label class="label">Test String</label>
         <textarea id="testString" placeholder="Paste your text here to test against the pattern...">
-Hello world! This is a test string.
-Contact: test@example.com
-Phone: 123-456-7890
+            Hello world! This is a test string.
+            Contact: test@example.com
+            Phone: 123-456-7890
         </textarea>
 
         <label class="label">Match Preview</label>
@@ -226,5 +242,6 @@ Phone: 123-456-7890
 </footer>
 
 <script src="regex.js"></script>
+<script src="../../theme.js"></script>
 </body>
 </html>

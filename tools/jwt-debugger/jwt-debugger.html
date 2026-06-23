@@ -17,17 +17,6 @@
     <script src="../../assets/js/notifications.js" defer></script>
     <style>
 
-        :root {
-            --accent-color: #007acc;
-            --key-color: #9cdcfe;
-            --string-color: #ce9178;
-            --number-color: #b5cea8;
-            --bool-color: #569cd6;
-            --muted: #666666;
-            --meta-tag-bg: #e8e8e8;
-            --meta-value: #555555;
-        }
-
         body.dark-mode {
             --muted: #aaaaaa;
             --meta-tag-bg: #3c3c3c;
@@ -132,6 +121,26 @@
 
         @media (max-width: 768px) {
             .container { grid-template-columns: 1fr; }
+        }
+
+                footer {
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
         }
     
     </style>

@@ -295,34 +295,17 @@
         }
 
         .thumbnail-btn:hover {
-            background: #000;
-            color: #fff;
+            background: var(--text);
+            color: var(--bg);
         }
 
         .thumbnail-label {
-            background: #000;
-            color: #fff;
+            background: var(--text);
+            color: var(--bg);
             padding: 6px 8px;
             font-size: 12px;
             text-align: center;
             font-weight: bold;
-        }
-
-        /* FOOTER */
-        .footer {
-            background: var(--bg);
-            border-top: 4px solid var(--border);
-            padding: 15px 30px;
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            align-items: center;
-        }
-
-        .footer-info {
-            margin-left: auto;
-            color: var(--text);
-            font-size: 12px;
         }
 
         /* SIGNATURE PAD */
@@ -389,7 +372,8 @@
         .loading {
             text-align: center;
             padding: 40px;
-            color: #fff;
+            background: var(--text);
+            color: var(--bg);
             font-size: 18px;
         }
 
@@ -484,7 +468,8 @@
         /* REDACTION BOX */
         .redaction-box {
             position: absolute;
-            background: #000;
+            background: var(--text);
+            color: var(--bg);
             border: 2px solid #fff;
             cursor: move;
             z-index: 10;
@@ -524,8 +509,8 @@
             width: 40px;
             height: 40px;
             border: 3px solid #fff;
-            background: #000;
-            color: #fff;
+            background: var(--text);
+            color: var(--bg);
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
@@ -540,7 +525,8 @@
         }
 
         .page-info-display {
-            color: #fff;
+            background: var(--text);
+            color: var(--bg);
             font-size: 16px;
             font-weight: bold;
             padding: 0 20px;
@@ -561,26 +547,11 @@
             transition: transform 0.2s ease;
         }
     
-        .dark-mode-toggle {
-            margin-top: 12px;
-            padding: 8px 12px;
-            border: 2px solid var(--border);
-            background: var(--bg);
-            color: var(--text);
-            cursor: pointer;
-            font-family: inherit;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-        }
-
-        .dark-mode-toggle:hover {
-            background: var(--text);
-            color: var(--bg);
-        }
-
         .sidebar-footer {
-            padding: 20px;
-            border-top: 4px solid var(--border);
+            padding: 30px 20px;
+            margin-top: 60px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
         }
 
         .back-home {
@@ -596,9 +567,23 @@
         .back-home:hover {
             opacity: 0.7;
         }
+
+        .sidebar-footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .sidebar-footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
     </style>
     <link rel="stylesheet" href="../../theme.css">
-    <script src="../../theme.js"></script>
 </head>
 <body>
     <div class="container">
@@ -663,5 +648,6 @@
         </div>
     </div>
     <script src="studio_pdf.js"></script>
+    <script src="../../theme.js"></script>
 </body>
 </html>

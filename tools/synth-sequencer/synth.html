@@ -12,7 +12,6 @@
     <meta name="twitter:title" content="Synth Sequencer - Project Toolsuite" />
     <meta name="twitter:description" content="Create and experiment with audio sequences using an interactive browser-based synthesizer." />
     <link rel="stylesheet" href="../../theme.css">
-    <script src="../../theme.js"></script>
     <style>
 
         :root {
@@ -148,6 +147,27 @@
             margin-top: 30px;
             border: 2px solid var(--border);
         }
+        footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
+
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
     
     </style>
 </head>
@@ -193,5 +213,6 @@
     </footer>
 
     <script src="synth-logic.js"></script>
+    <script src="../../theme.js"></script>
 </body>
 </html>

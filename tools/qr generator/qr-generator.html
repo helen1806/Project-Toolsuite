@@ -20,24 +20,6 @@
     <script src="../../assets/js/notifications.js" defer></script>
     <style>
 
-        :root {
-            --focus-border: #555555;
-            --focus-bg: #f5f5f5;
-            --disabled-bg: #eeeeee;
-            --disabled-text: #888888;
-            --disabled-border: #888888;
-            --canvas-border: #eeeeee;
-        }
-
-        body.dark-mode {
-            --focus-border: #aaaaaa;
-            --focus-bg: #333333;
-            --disabled-bg: #444444;
-            --disabled-text: #888888;
-            --disabled-border: #666666;
-            --canvas-border: #555555;
-        }
-
         body {
             font-family: 'Courier New', Courier, monospace;
             background-color: var(--bg);
@@ -200,10 +182,26 @@ a:hover {
 
 /*Footer*/
 footer {
-    margin-top: 60px;
-    font-size: 0.9rem;
-}
+            margin-top: 60px;
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 12px 12px 0 0;
+        }
 
+        footer a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 900;
+            border: 2px solid var(--border);
+            padding: 8px 16px;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        footer a:hover {
+            background: var(--text);
+            color: var(--bg);
+        }
 /* Responsive*/
 @media (max-width: 600px) {
     body {
@@ -218,9 +216,7 @@ footer {
     #qr-result {
         width: 100%;
     }
-}
-
-    
+} 
     </style>
 </head>
 <body>
@@ -260,7 +256,7 @@ footer {
     </main>
 
         <footer>
-            <p><a href="../../index.html">← Back to Home</a></p>
+            <a href="../../index.html">← Back to Home</a>
         </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
