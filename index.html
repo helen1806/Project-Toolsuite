@@ -1036,11 +1036,6 @@ function renderTags() {
 }
 
 function renderTools() {
-  const rawQuery = document.getElementById("toolSearch").value.trim();
-  if (!rawQuery) {
-    activeTag = 'all';
-    renderTags();
-  }
   const normalize = (str) => str.toLowerCase().replace(/\s+/g, "");
   const query = normalize(document.getElementById("toolSearch").value);
   const container = document.getElementById("tools-container");
