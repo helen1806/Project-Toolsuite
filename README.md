@@ -176,10 +176,10 @@ See the `LICENSE` file for complete details.
 
 | Rank | Contributor | Points | Commits |
 |-----:|------------|-------:|--------:|
-| 1 | @Winter262005 | 291 | 291 |
+| 1 | @Winter262005 | 292 | 292 |
 | 2 | @love25-codes | 26 | 26 |
 | 3 | @VITianYash42 | 20 | 20 |
-| 4 | @rach-kanc | 14 | 14 |
+| 4 | @rach-kanc | 16 | 16 |
 | 5 | @Ishwarpatra | 13 | 13 |
 | 6 | @Dru-429 | 13 | 13 |
 | 7 | @Sargam-Ghagre | 11 | 11 |
