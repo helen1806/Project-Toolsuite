@@ -35,11 +35,11 @@
         }
 
         h2 {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             text-transform: uppercase;
             border-bottom: 2px solid var(--border);
             display: inline-block;
-            margin-top: 64px;
+            margin-top: 20px;
             margin-bottom: 24px;
             padding-bottom: 4px;
         }
@@ -51,12 +51,14 @@
         p {
             max-width: 720px;
             margin-bottom: 18px;
+            font-size: 1.1rem;
+            line-height: 1.9;
         }
 
         .contributors-list {
             list-style: none;
             padding: 0;
-            margin-top: 32px;
+            margin-top: 30px;
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 18px;
@@ -66,16 +68,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-
-            padding: 18px 20px;
-
+            padding: 22px 24px;
             border: 2px solid var(--border);
             border-radius: 12px;
-
             background: var(--surface);
-
             box-shadow: 0 4px 12px var(--shadow);
-
             transition:
                 transform 0.25s ease,
                 background-color 0.25s ease,
@@ -92,8 +89,8 @@
         }
 
         .contributor-name {
-            font-weight: bold;
-            font-size: 0.95rem;
+           font-weight: bold;
+            font-size: 1.15rem;
         }
 
         a {
@@ -101,6 +98,7 @@
             text-decoration: none;
             border-bottom: 1px dotted var(--border);
             padding: 2px 4px;
+            font-size: 1.05rem;
             transition: background-color 0.25s, color 0.25s;
         }
         .return-tools-wrapper {
@@ -151,6 +149,19 @@
 
             .contributors-list {
                 grid-template-columns: 1fr;
+            }
+
+            .contributor-name {
+                font-size: 1.05rem;
+            }
+
+            p,
+            a {
+                font-size: 1rem;
+            }
+
+            h2 {
+                font-size: 1.35rem;
             }
         }
     </style>
