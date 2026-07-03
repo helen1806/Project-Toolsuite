@@ -202,6 +202,82 @@
             top: 0;
         }
 
+        tr.invalid-row {
+            background: rgba(255, 0, 0, 0.05);
+        }
+
+        td.cell-mismatch {
+            background: #ff6b6b;
+            color: white;
+            font-weight: bold;
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        td.cell-extra {
+            background: #ffa726;
+            color: white;
+            font-weight: bold;
+            animation: pulse 0.6s ease-in-out;
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        .stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            padding: 16px;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.95rem;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .stat-label {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            color: var(--muted);
+        }
+
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .validation-info {
+            padding: 12px;
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            display: none;
+            margin-top: 12px;
+        }
+
+        .validation-info.show {
+            display: block;
+        }
+
         footer {
             margin-top: 40px;
             padding: 24px 0 0;
@@ -267,6 +343,7 @@
                 </button>
                 <button data-action onclick="toJSON()">JSON</button>
                 <button data-action onclick="toCSV()">Format CSV</button>
+                <button data-action onclick="minifyCSV()">Minify CSV</button>
                 <button data-action onclick="clearAll()">Clear</button>
                 <button data-export onclick="downloadCSV()">Download CSV</button>
                 <button data-export onclick="downloadJSON()">Download JSON</button>
@@ -289,6 +366,25 @@
                         <button onclick="downloadTableAsImage()">PNG</button>
                     </div>
                 </div>
+                <div id="validationInfo" class="validation-info"></div>
+                <div class="stats" id="stats" style="display: none;">
+                    <div class="stat-item">
+                        <span class="stat-label">Rows</span>
+                        <span class="stat-value" id="rowCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Columns</span>
+                        <span class="stat-value" id="colCount">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Blank Cells</span>
+                        <span class="stat-value" id="blankCellCount" style="color: #ff6b6b;">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Extra Cells</span>
+                        <span class="stat-value" id="extraCellCount" style="color: #ffa726;">0</span>
+                    </div>
+                </div>
                 <div class="table-wrap">
                     <table id="table"></table>
                 </div>
@@ -304,6 +400,7 @@
         let data = [];
         let headers = [];
         let currentMode = "csv";
+        let invalidRows = new Set();
         function setCopyButtonVisibility(visible) {
             const copyBtn = document.getElementById("copyBtn");
             if (!copyBtn) return;
@@ -414,15 +511,34 @@
             event.target.value = "";
         }
 
+        function validateCSV() {
+            invalidRows.clear();
+            let invalidCount = 0;
+
+            data.forEach((row, index) => {
+                // Check if row has wrong column count
+                if (row.length !== headers.length) {
+                    invalidRows.add(index);
+                    invalidCount++;
+                }
+            });
+
+            return invalidCount;
+        }
+
         function renderTable(rows) {
             const table = document.getElementById("table");
             const tableActions = document.querySelector(".table-actions");
             table.innerHTML = "";
 
+            // Validate BEFORE rendering
+            validateCSV();
+
             if (!rows.length || !headers.length) {
                 if (tableActions) {
                     tableActions.style.display = "none";
                 }
+                document.getElementById("stats").style.display = "none";
                 return;
             }
 
@@ -438,17 +554,84 @@
             });
             table.appendChild(headerRow);
 
-            rows.forEach(row => {
+            rows.forEach((row, rowIndex) => {
                 const tr = document.createElement("tr");
 
-                headers.forEach((_, i) => {
+                // Mark invalid rows
+                if (invalidRows.has(rowIndex)) {
+                    tr.classList.add("invalid-row");
+                }
+
+                headers.forEach((_, colIndex) => {
                     const td = document.createElement("td");
-                    td.textContent = row[i] || "";
+                    td.textContent = row[colIndex] || "";
+
+                    // Highlight mismatched cells
+                    if (invalidRows.has(rowIndex)) {
+                        // Row has fewer columns than headers (missing cell)
+                        if (colIndex >= row.length) {
+                            td.classList.add("cell-mismatch");
+                            td.title = "Missing value";
+                        }
+                    }
+
                     tr.appendChild(td);
                 });
 
+                // Highlight extra columns (row has more columns than headers)
+                for (let i = headers.length; i < row.length; i++) {
+                    const td = document.createElement("td");
+                    td.textContent = row[i];
+                    td.classList.add("cell-extra");
+                    td.title = "Extra column";
+                    tr.appendChild(td);
+                }
+
                 table.appendChild(tr);
             });
+
+            // Update stats
+            updateStats(rows);
+        }
+
+        function updateStats(rows) {
+            validateCSV();
+
+            // Count blank cells (missing values in expected columns)
+            let blankCellCount = 0;
+            data.forEach((row) => {
+                for (let i = 0; i < headers.length; i++) {
+                    if (i >= row.length || row[i] === "") {
+                        blankCellCount++;
+                    }
+                }
+            });
+
+            // Count extra cells (columns beyond expected)
+            let extraCellCount = 0;
+            data.forEach((row) => {
+                if (row.length > headers.length) {
+                    extraCellCount += (row.length - headers.length);
+                }
+            });
+
+            document.getElementById("rowCount").textContent = rows.length;
+            document.getElementById("colCount").textContent = headers.length;
+            document.getElementById("blankCellCount").textContent = blankCellCount;
+            document.getElementById("extraCellCount").textContent = extraCellCount;
+            document.getElementById("stats").style.display = "flex";
+
+            // Show validation info if there are invalid rows
+            const validationInfo = document.getElementById("validationInfo");
+            if (blankCellCount > 0 || extraCellCount > 0) {
+                const issues = [];
+                if (blankCellCount > 0) issues.push(`${blankCellCount} blank cell(s)`);
+                if (extraCellCount > 0) issues.push(`${extraCellCount} extra cell(s)`);
+                validationInfo.textContent = `⚠️ ${issues.join(", ")}`;
+                validationInfo.classList.add("show");
+            } else {
+                validationInfo.classList.remove("show");
+            }
         }
 
         function toJSON() {
@@ -480,14 +663,40 @@
             document.getElementById("csvInput").value = csv;
 
             currentMode = "csv";
+            parseCSV(); // Re-render table
+            setCopyButtonVisibility(true);
+        }
+
+        function minifyCSV() {
+            if (!loadData()) return;
+
+            const csv = Papa.unparse({
+                fields: headers,
+                data: data
+            });
+
+            // Remove extra whitespace around delimiters and trim each line
+            const minified = csv
+                .split("\n")
+                .map(line => line.trim())
+                .filter(line => line.length > 0)
+                .join("\n");
+
+            document.getElementById("csvInput").value = minified;
+
+            currentMode = "csv";
+            parseCSV(); // Re-render table
             setCopyButtonVisibility(true);
         }
         function clearAll() {
             document.getElementById("csvInput").value = "";
             setCopyButtonVisibility(false);
             document.getElementById("table").innerHTML = "";
+            document.getElementById("stats").style.display = "none";
+            document.getElementById("validationInfo").classList.remove("show");
             data = [];
             headers = [];
+            invalidRows.clear();
             updateButtonState();
         }
 
