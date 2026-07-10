@@ -2,7 +2,7 @@
 
 | Rank | Contributor | Points | Commits |
 |-----:|------------|-------:|--------:|
-| 1 | @Winter262005 | 306 | 306 |
+| 1 | @Winter262005 | 309 | 309 |
 | 2 | @love25-codes | 28 | 28 |
 | 3 | @VITianYash42 | 20 | 20 |
 | 4 | @rach-kanc | 16 | 16 |
@@ -19,29 +19,30 @@
 | 15 | @SamXop123 | 4 | 4 |
 | 16 | @shreyagupta2006 | 3 | 3 |
 | 17 | @stargalax | 3 | 3 |
-| 18 | @SuyashSoni10 | 3 | 3 |
-| 19 | @ShaikhWarsi | 3 | 3 |
-| 20 | @Pranavkale11 | 3 | 3 |
-| 21 | @KaustAbhinand | 3 | 3 |
-| 22 | @architsinghal0005 | 2 | 2 |
-| 23 | @VedanshN | 2 | 2 |
-| 24 | @nikhil1205-ai | 2 | 2 |
-| 25 | @MEHWISH310 | 2 | 2 |
-| 26 | @dishant62 | 2 | 2 |
-| 27 | @AshutoshDash1999 | 2 | 2 |
-| 28 | @Aharshi3614 | 2 | 2 |
-| 29 | @yhcb21 | 1 | 1 |
-| 30 | @Shweta-Bairagi0312 | 1 | 1 |
-| 31 | @jahareena-06 | 1 | 1 |
-| 32 | @vishakhaojha57 | 1 | 1 |
-| 33 | @Vanshikaram | 1 | 1 |
-| 34 | @Shlok-Dwivedi | 1 | 1 |
-| 35 | @StackFox | 1 | 1 |
-| 36 | @PulkitSachdev25 | 1 | 1 |
-| 37 | @Laasya2007 | 1 | 1 |
-| 38 | @Gunjan10-droid | 1 | 1 |
-| 39 | @CharlapallyDivyani | 1 | 1 |
-| 40 | @anshul-lh44 | 1 | 1 |
-| 41 | @androidvitb | 1 | 1 |
+| 18 | @hashhhh-16 | 3 | 3 |
+| 19 | @SuyashSoni10 | 3 | 3 |
+| 20 | @ShaikhWarsi | 3 | 3 |
+| 21 | @Pranavkale11 | 3 | 3 |
+| 22 | @KaustAbhinand | 3 | 3 |
+| 23 | @architsinghal0005 | 2 | 2 |
+| 24 | @VedanshN | 2 | 2 |
+| 25 | @nikhil1205-ai | 2 | 2 |
+| 26 | @MEHWISH310 | 2 | 2 |
+| 27 | @dishant62 | 2 | 2 |
+| 28 | @AshutoshDash1999 | 2 | 2 |
+| 29 | @Aharshi3614 | 2 | 2 |
+| 30 | @yhcb21 | 1 | 1 |
+| 31 | @Shweta-Bairagi0312 | 1 | 1 |
+| 32 | @jahareena-06 | 1 | 1 |
+| 33 | @vishakhaojha57 | 1 | 1 |
+| 34 | @Vanshikaram | 1 | 1 |
+| 35 | @Shlok-Dwivedi | 1 | 1 |
+| 36 | @StackFox | 1 | 1 |
+| 37 | @PulkitSachdev25 | 1 | 1 |
+| 38 | @Laasya2007 | 1 | 1 |
+| 39 | @Gunjan10-droid | 1 | 1 |
+| 40 | @CharlapallyDivyani | 1 | 1 |
+| 41 | @anshul-lh44 | 1 | 1 |
+| 42 | @androidvitb | 1 | 1 |
 
-_Last updated: Thu, 09 Jul 2026 03:36:22 GMT_
+_Last updated: Fri, 10 Jul 2026 03:38:02 GMT_
