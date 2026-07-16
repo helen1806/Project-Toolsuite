@@ -64,6 +64,42 @@ toggleSelection(shape) {
             : null;
 }
 
+duplicateSelected() {
+    if (this.selectedShapes.length === 0) {
+        return;
+    }
+
+    this.saveState();
+
+    const offset = 20;
+
+    const duplicatedShapes = this.selectedShapes.map(shape => {
+        const duplicate = JSON.parse(
+            JSON.stringify(shape)
+        );
+
+        duplicate.x += offset;
+        duplicate.y += offset;
+
+        if (['line', 'arrow'].includes(duplicate.type)) {
+            duplicate.ex += offset;
+            duplicate.ey += offset;
+        }
+
+        return duplicate;
+    });
+
+    this.shapes.push(...duplicatedShapes);
+
+    this.selectedShapes = duplicatedShapes;
+
+    this.selection =
+        duplicatedShapes[duplicatedShapes.length - 1];
+
+    this.saveToLocalStorage();
+    this.updatePropsUI();
+}
+
     // --- MATH UTILS ---
 
     snap(val) {
