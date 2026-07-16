@@ -127,11 +127,12 @@
         }
 
         /* WORKSPACE */
-        .workspace {
-            flex: 1;
-            display: flex;
-            position: relative;
-        }
+      .workspace {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    position: relative;
+}
 
         /* TOOLBAR (LEFT) */
         .toolbar {
@@ -182,16 +183,20 @@
         }
 
         /* PROPERTIES PANEL (RIGHT) */
-        .properties {
-            width: 250px;
-            background: var(--panel);
-            border-left: 2px solid var(--border);
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            z-index: 20;
-        }
+     .properties {
+    width: 250px;
+    height: 100%;
+    min-height: 0;
+    background: var(--panel);
+    border-left: 2px solid var(--border);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 20;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
         .prop-group {
             display: flex;
