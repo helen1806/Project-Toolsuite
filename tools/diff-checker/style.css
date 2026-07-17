@@ -193,3 +193,61 @@
             background: var(--text);
             color: var(--bg);
         }
+.input-container {
+    display: flex;
+    align-items: stretch;
+    gap: 20px;
+    min-height: 200px;
+}
+
+.input-box {
+    flex: 1;
+    min-height: 100px;
+}
+
+.swap-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.swap-button {
+    width: 45px;
+    height: 45px;
+
+    border: 1px solid var(--border);
+    border-radius: 50%;
+
+    background: var(--surface);
+    color: var(--text);
+
+    font-size: 24px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: transform 0.25s ease, background-color 0.25s ease;
+}
+
+.swap-button:hover {
+    transform: rotate(180deg);
+}
+
+@media (max-width: 768px) {
+    .input-container {
+        flex-direction: column;
+    }
+
+    .swap-container {
+        margin: 10px 0;
+    }
+
+    .swap-button:hover {
+        transform: rotate(180deg);
+    }
+}

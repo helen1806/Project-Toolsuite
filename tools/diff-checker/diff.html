@@ -39,16 +39,29 @@
         <button class="dark-mode-toggle" onclick="toggleTheme()" id="themeBtn" aria-label="Toggle theme">DARK MODE</button>
     </header>
 
-    <div class="input-container">
-        <div class="input-box">
-            <label>Original Text</label>
-            <textarea id="original" placeholder="Paste original code/text here..."></textarea>
-        </div>
-        <div class="input-box">
-            <label>Modified Text</label>
-            <textarea id="modified" placeholder="Paste modified code/text here..."></textarea>
-        </div>
+ <div class="input-container">
+
+    <div class="input-box">
+        <label for="original">Original Text</label>
+        <textarea id="original" placeholder="Paste original code/text here..."></textarea>
     </div>
+
+    <div class="swap-container">
+        <button
+            class="swap-button"
+            onclick="swapTexts()"
+            aria-label="Swap original and modified text"
+            title="Swap original and modified text">
+            ⇄
+        </button>
+    </div>
+
+    <div class="input-box">
+        <label for="modified">Modified Text</label>
+        <textarea id="modified" placeholder="Paste modified code/text here..."></textarea>
+    </div>
+
+</div>
 
     <div class="controls">
         <button onclick="compareText()">🔍 Compare Differences</button>
