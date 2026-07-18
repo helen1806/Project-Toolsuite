@@ -112,3 +112,14 @@ function clearAll() {
     modifiedInput.value = '';
     outputDiv.innerHTML = '<div style="padding: 20px; color: #666; text-align: center;">Result will appear here...</div>';
 }
+
+
+function swapTexts() {
+    const original = document.getElementById("original");
+    const modified = document.getElementById("modified");
+
+    const temp = original.value;
+
+    original.value = modified.value;
+    modified.value = temp;
+}
